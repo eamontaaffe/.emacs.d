@@ -131,6 +131,8 @@ point reaches the beginning or end of the buffer, stop there."
          ("C-c C-<" . mc/mark-all-like-this))
   :ensure t)
 
+(use-package reason-mode
+  :ensure t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
