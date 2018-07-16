@@ -17,9 +17,9 @@
 
 ;; Set up package management with `use-package`
 
-(eval-when-compile
-  (add-to-list 'load-path "./use-package/use-package.el")
-  (require 'use-package))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 ;;;; Sane defaults ;;;;
 
