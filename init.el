@@ -93,7 +93,9 @@ point reaches the beginning or end of the buffer, stop there."
   (helm-mode 1)
   (require 'helm-config)
   :bind (("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files))
+         ("C-x C-f" . helm-find-files)
+         ("C-c h" . helm-mini)
+         ("C-x C-b" . helm-buffers-list))
   :ensure t)
 
 (use-package helm-ls-git
