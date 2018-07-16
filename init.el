@@ -12,6 +12,8 @@
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
+(add-to-list 'default-frame-alist '(height . 300))
+(add-to-list 'default-frame-alist '(width . 80))
 
 ;; Set up package management with `use-package`
 
