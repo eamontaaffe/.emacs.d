@@ -68,7 +68,11 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key [remap move-beginning-of-line]
 		'smarter-move-beginning-of-line)
 
-;;;; End sane defaults ;;;;
+;; UTF-8
+(prefer-coding-system 'utf-8)
+(when (display-graphic-p)
+  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+
 ;;;; Backups ;;;;
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
