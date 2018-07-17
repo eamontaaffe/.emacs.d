@@ -79,18 +79,6 @@ point reaches the beginning or end of the buffer, stop there."
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions -1)
-(setq version-control t)
-(setq vc-make-backup-files t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-(setq savehist-file "~/.emacs.d/savehist")
-(savehist-mode 1)
-(setq history-length t)
-(setq history-delete-duplicates t)
-(setq savehist-save-minibuffer-history 1)
-(setq savehist-additional-variables
-      '(kill-ring
-        search-ring
-        regexp-search-ring))
 
 ;;;; Package stuff ;;;;
 
@@ -111,11 +99,9 @@ point reaches the beginning or end of the buffer, stop there."
   :ensure t)
 
 (use-package helm-projectile
-  :requires helm
   :ensure t)
 
 (use-package projectile
-  :requires helm-projectile
   :ensure t
   :init
   (setq projectile-enable-caching t)
@@ -123,7 +109,7 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (projectile-global-mode t)
   (helm-projectile-on)
-  (global-set-key (kbd "C-c p .") 'helm-projectile-find-file-dwim))
+  :bind (("C-c p ." . helm-projectile-find-file-dwim)))
 
 (use-package magit
   :ensure t
