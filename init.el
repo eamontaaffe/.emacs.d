@@ -138,6 +138,9 @@ point reaches the beginning or end of the buffer, stop there."
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
   :ensure t)
 
+(use-package white-theme
+  :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
