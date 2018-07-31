@@ -103,6 +103,11 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package helm-projectile
   :ensure t)
 
+(use-package helm-ag
+  :config
+  (add-to-list 'exec-path "/usr/local/bin/")
+  :ensure t)
+
 (use-package projectile
   :ensure t
   :init
