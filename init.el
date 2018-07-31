@@ -146,9 +146,12 @@ point reaches the beginning or end of the buffer, stop there."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("8dce5b23232d0a490f16d62112d3abff6babeef86ae3853241a85856f9b0a6e7" "d97baf5a34c87b05508739505cad03438cde8efa2a0d350c7773f2a8bc26a50d" "099c44618d7660548701d4f495a8c23a85103bc7b87fec33c9db4cd099a4adaf" default)))
  '(package-selected-packages
    (quote
-    (reason-mode multiple-cursors magit helm-projectile helm projectile))))
+    (exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
