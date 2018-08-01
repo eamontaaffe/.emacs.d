@@ -1,14 +1,5 @@
-*~
-auto-save-list
-backups
-savehist
-elpa/
-var/
-ido.last
-smex-items
-history
-recentf
-projectile-bookmarks.eld
-projectile.cache
-.mc-lists.el
-network-security.data
+# Ignore everything
+*
+
+# Except for the init.el file
+!init.el
