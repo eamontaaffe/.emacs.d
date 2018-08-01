@@ -165,7 +165,23 @@ point reaches the beginning or end of the buffer, stop there."
     ("8dce5b23232d0a490f16d62112d3abff6babeef86ae3853241a85856f9b0a6e7" "d97baf5a34c87b05508739505cad03438cde8efa2a0d350c7773f2a8bc26a50d" "099c44618d7660548701d4f495a8c23a85103bc7b87fec33c9db4cd099a4adaf" default)))
  '(package-selected-packages
    (quote
-    (exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile))))
+    (rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
+ '(vc-annotate-background "#ffffff")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#ab4642")
+     (50 . "#dc9656")
+     (80 . "#f7ca88")
+     (110 . "#a1b56c")
+     (140 . "#86c1b9")
+     (170 . "#7cafc2")
+     (200 . "#ab4642")
+     (230 . "#a16046")
+     (260 . "#181818")
+     (290 . "#282828")
+     (320 . "#383838")
+     (350 . "#585858"))))
+ '(vc-annotate-very-old-color "#585858"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
