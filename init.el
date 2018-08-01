@@ -46,6 +46,9 @@
 ;; Spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
+;; Remove text in active region if inserting text
+(delete-selection-mode 1)
+
 ;; Beginning of line
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
