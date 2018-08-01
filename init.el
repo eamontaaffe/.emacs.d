@@ -149,6 +149,10 @@ point reaches the beginning or end of the buffer, stop there."
 
 (use-package twilight-bright-theme
   :ensure t)
+
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
   :ensure t)
 
 (custom-set-variables
