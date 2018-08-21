@@ -214,6 +214,20 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package elm-mode
   :ensure t)
 
+;; Custom functions
+
+(defun frame-default ()
+  (interactive)
+  (if (window-system)
+      (set-frame-size (selected-frame) 80 100)))
+
+(defun frame-double ()
+  (interactive)
+  (if (window-system)
+      (set-frame-size (selected-frame) 163 100)))  
+
+;; Generated stuff (don't edit)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
