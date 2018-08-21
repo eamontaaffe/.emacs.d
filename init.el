@@ -172,6 +172,13 @@ point reaches the beginning or end of the buffer, stop there."
   (global-undo-tree-mode)
   :ensure t)
 
+;; Haskell
+
+(use-package intero
+  :config
+  (intero-global-mode 1)
+  :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
