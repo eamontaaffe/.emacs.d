@@ -179,6 +179,21 @@ point reaches the beginning or end of the buffer, stop there."
   (intero-global-mode 1)
   :ensure t)
 
+;; Org mode
+
+(global-set-key "\C-ca" 'org-agenda)
+
+(setq org-time-clocksum-use-fractional 1)
+
+(setq org-agenda-files '("~/org"))
+
+(use-package ox-pandoc
+  :ensure t)
+
+(add-hook 'org-mode-hook 'visual-line-mode)
+
+(setq org-duration-format (quote h:mm))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
