@@ -88,6 +88,10 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Turn off bell
 
 (setq ring-bell-function 'ignore)
+
+;; Automatically reload files that have changed
+(global-auto-revert-mode t)
+
 ;;;; Package stuff ;;;;
 
 (use-package helm
