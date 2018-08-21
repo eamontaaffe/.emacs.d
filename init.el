@@ -85,6 +85,9 @@ point reaches the beginning or end of the buffer, stop there."
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions -1)
 
+;; Turn off bell
+
+(setq ring-bell-function 'ignore)
 ;;;; Package stuff ;;;;
 
 (use-package helm
