@@ -236,9 +236,10 @@ point reaches the beginning or end of the buffer, stop there."
  '(custom-safe-themes
    (quote
     ("8dce5b23232d0a490f16d62112d3abff6babeef86ae3853241a85856f9b0a6e7" "d97baf5a34c87b05508739505cad03438cde8efa2a0d350c7773f2a8bc26a50d" "099c44618d7660548701d4f495a8c23a85103bc7b87fec33c9db4cd099a4adaf" default)))
+ '(markdown-command "/usr/local/bin/pandoc")
  '(package-selected-packages
    (quote
-    (rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
+    (intero interleave elm-mode idris-mode ox-pandoc ox-md markdown-mode undo-tree graphql-mode toc-org rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
  '(vc-annotate-background "#ffffff")
  '(vc-annotate-color-map
    (quote
