@@ -1,7 +1,9 @@
 (require 'package)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://stable.melpa.org/packages/") t)
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 (package-initialize)
 
@@ -44,6 +46,9 @@
 ;; Spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
+;; Remove text in active region if inserting text
+(delete-selection-mode 1)
+
 ;; Beginning of line
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -80,6 +85,13 @@ point reaches the beginning or end of the buffer, stop there."
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions -1)
 
+;; Turn off bell
+
+(setq ring-bell-function 'ignore)
+
+;; Automatically reload files that have changed
+(global-auto-revert-mode t)
+
 ;;;; Package stuff ;;;;
 
 (use-package helm
@@ -99,6 +111,11 @@ point reaches the beginning or end of the buffer, stop there."
   :ensure t)
 
 (use-package helm-projectile
+  :ensure t)
+
+(use-package helm-ag
+  :config
+  (add-to-list 'exec-path "/usr/local/bin/")
   :ensure t)
 
 (use-package projectile
@@ -132,15 +149,119 @@ point reaches the beginning or end of the buffer, stop there."
           (lambda ()
             (make-local-variable 'js-indent-level)
             (setq js-indent-level 2)))
+(use-package yaml-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+  :ensure t)
+
+(use-package js2-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (setq js2-basic-offset 2)
+  :ensure t)
+
+(use-package twilight-bright-theme
+  :ensure t)
+
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+  :ensure t)
+
+(use-package toc-org
+  :config
+  (add-hook 'org-mode-hook 'toc-org-enable)
+  :ensure t)
+
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode)
+  :ensure t)
+
+;; Haskell
+
+(use-package intero
+  :config
+  (intero-global-mode 1)
+  :ensure t)
+
+;; Org mode
+
+(global-set-key "\C-ca" 'org-agenda)
+
+(setq org-time-clocksum-use-fractional 1)
+
+(setq org-agenda-files '("~/org"))
+
+(use-package ox-pandoc
+  :ensure t)
+
+(add-hook 'org-mode-hook 'visual-line-mode)
+
+(setq org-duration-format (quote h:mm))
+
+;; Graphql
+
+(use-package graphql-mode
+  :ensure t)
+
+;; Markdown
+
+(use-package markdown-mode
+  :ensure t)
+
+;; Idris
+
+(use-package idris-mode
+  :ensure t)
+
+;; Elm
+
+(use-package elm-mode
+  :ensure t)
+
+;; Custom functions
+
+(defun frame-default ()
+  (interactive)
+  (if (window-system)
+      (set-frame-size (selected-frame) 80 100)))
+
+(defun frame-double ()
+  (interactive)
+  (if (window-system)
+      (set-frame-size (selected-frame) 163 100)))  
+
+;; Generated stuff (don't edit)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("8dce5b23232d0a490f16d62112d3abff6babeef86ae3853241a85856f9b0a6e7" "d97baf5a34c87b05508739505cad03438cde8efa2a0d350c7773f2a8bc26a50d" "099c44618d7660548701d4f495a8c23a85103bc7b87fec33c9db4cd099a4adaf" default)))
+ '(markdown-command "/usr/local/bin/pandoc")
  '(package-selected-packages
    (quote
-    (reason-mode multiple-cursors magit helm-projectile helm projectile))))
+    (intero interleave elm-mode idris-mode ox-pandoc ox-md markdown-mode undo-tree graphql-mode toc-org rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
+ '(vc-annotate-background "#ffffff")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#ab4642")
+     (50 . "#dc9656")
+     (80 . "#f7ca88")
+     (110 . "#a1b56c")
+     (140 . "#86c1b9")
+     (170 . "#7cafc2")
+     (200 . "#ab4642")
+     (230 . "#a16046")
+     (260 . "#181818")
+     (290 . "#282828")
+     (320 . "#383838")
+     (350 . "#585858"))))
+ '(vc-annotate-very-old-color "#585858"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
