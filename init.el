@@ -126,6 +126,13 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package reason-mode
   :ensure t)
 
+;;; Other stuff ;;;
+
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
