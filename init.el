@@ -162,6 +162,11 @@ point reaches the beginning or end of the buffer, stop there."
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
   :ensure t)
 
+(use-package toc-org
+  :config
+  (add-hook 'org-mode-hook 'toc-org-enable)
+  :ensure t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
