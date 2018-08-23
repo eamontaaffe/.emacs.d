@@ -1,11 +1,17 @@
 (require 'package)
-
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/"))
 
 (package-initialize)
+
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
 
 ;; No splash screen
 (setq inhibit-startup-message t)
@@ -16,12 +22,6 @@
 (tool-bar-mode -1)
 (add-to-list 'default-frame-alist '(height . 300))
 (add-to-list 'default-frame-alist '(width . 80))
-
-;; Set up package management with `use-package`
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
 
 ;;;; Sane defaults ;;;;
 
@@ -126,7 +126,9 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (projectile-global-mode t)
   (helm-projectile-on)
-  :bind (("C-c p ." . helm-projectile-find-file-dwim)))
+  :bind (("C-c p ." . helm-projectile-find-file-dwim)
+         ("C-c p p" . helm-projectile-switch-project)
+         ("C-c p i" . projectile-invalidate-cache)))
 
 (use-package magit
   :ensure t
@@ -193,8 +195,8 @@ point reaches the beginning or end of the buffer, stop there."
 
 (setq org-agenda-files '("~/org"))
 
-(use-package ox-pandoc
-  :ensure t)
+;; (use-package ox-pandoc
+;;   :ensure t)
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
@@ -233,35 +235,14 @@ point reaches the beginning or end of the buffer, stop there."
       (set-frame-size (selected-frame) 163 100)))  
 
 ;; Generated stuff (don't edit)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("8dce5b23232d0a490f16d62112d3abff6babeef86ae3853241a85856f9b0a6e7" "d97baf5a34c87b05508739505cad03438cde8efa2a0d350c7773f2a8bc26a50d" "099c44618d7660548701d4f495a8c23a85103bc7b87fec33c9db4cd099a4adaf" default)))
- '(markdown-command "/usr/local/bin/pandoc")
  '(package-selected-packages
    (quote
-    (intero interleave elm-mode idris-mode ox-pandoc ox-md markdown-mode undo-tree graphql-mode toc-org rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
- '(vc-annotate-background "#ffffff")
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#ab4642")
-     (50 . "#dc9656")
-     (80 . "#f7ca88")
-     (110 . "#a1b56c")
-     (140 . "#86c1b9")
-     (170 . "#7cafc2")
-     (200 . "#ab4642")
-     (230 . "#a16046")
-     (260 . "#181818")
-     (290 . "#282828")
-     (320 . "#383838")
-     (350 . "#585858"))))
- '(vc-annotate-very-old-color "#585858"))
+    (bind-key use-package toc-org rainbow-delimiters twilight-bright-theme js2-mode yaml-mode helm-ag reason-mode multiple-cursors magit helm-projectile helm projectile))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
