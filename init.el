@@ -214,6 +214,13 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package elm-mode
   :ensure t)
 
+;; Column enforcer
+
+(use-package column-enforce-mode
+  :config
+  (80-column-rule)
+  :ensure t)
+
 ;; Custom functions
 
 (defun frame-default ()
