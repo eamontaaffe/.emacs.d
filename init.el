@@ -231,6 +231,26 @@ point reaches the beginning or end of the buffer, stop there."
 
 (setq org-duration-format (quote h:mm))
 
+;;; Org capture setup
+
+(setq org-default-notes-file (concat org-directory "/capture.org"))
+
+(define-key global-map "\C-cc" 'org-capture)
+
+(setq org-capture-templates
+      '(("c" "Cadmus task" entry
+         (file+headline "~/org/cadmus.org" "Tasks")
+         "** TODO %?\n %i" :prepend t)
+
+        ("k" "Cadmus question" entry
+         (file+headline "~/org/cadmus.org" "Tasks")
+         "** QUESTION %?\n %i" :prepend t)
+        
+        ("h" "Home task" entry (file+headline "~/org/home.org" "Tasks")
+         "** TASK %?\n %i" :prepend t)))
+
+(define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
+
 ;; Graphql
 
 (use-package graphql-mode
