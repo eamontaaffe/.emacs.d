@@ -185,6 +185,30 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package tide
   :ensure t)
 
+;; Terraform
+
+(use-package terraform-mode
+  :ensure t)
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (setq indent-tabs-mode t)
+  (setq tab-width 4)
+  (setq typescript-indent-offset 4))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
 ;; Haskell
 
 (use-package intero
