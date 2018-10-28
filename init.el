@@ -283,6 +283,21 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package dockerfile-mode
   :ensure t)
 
+;; Latex mode
+
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x)) (exec-path-from-shell-initialize))
+  :ensure t)
+
+(use-package auctex
+  :requires exec-path-from-shell
+  :defer t
+  :init
+  (setq-default TeX-engine 'xetex)
+  (setq-default TeX-PDF-mode t)
+  :ensure t)
+
 ;; Custom functions
 
 (defun frame-default ()
