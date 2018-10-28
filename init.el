@@ -298,6 +298,12 @@ point reaches the beginning or end of the buffer, stop there."
   (setq-default TeX-PDF-mode t)
   :ensure t)
 
+;; Dash documentation
+(use-package helm-dash
+  :config
+  (setq helm-dash-docsets-path "/Users/eamon/Library/Application Support/Dash/DocSets/")
+  :ensure t)
+
 ;; Custom functions
 
 (defun frame-default ()
