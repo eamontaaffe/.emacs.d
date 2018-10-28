@@ -323,13 +323,22 @@ point reaches the beginning or end of the buffer, stop there."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#191C25" "#C16069" "#A2BF8A" "#ECCC87" "#80A0C2" "#B58DAE" "#86C0D1" "#F0F4FC"])
  '(custom-safe-themes
    (quote
-    ("8dce5b23232d0a490f16d62112d3abff6babeef86ae3853241a85856f9b0a6e7" "d97baf5a34c87b05508739505cad03438cde8efa2a0d350c7773f2a8bc26a50d" "099c44618d7660548701d4f495a8c23a85103bc7b87fec33c9db4cd099a4adaf" default)))
+    ("f0dc4ddca147f3c7b1c7397141b888562a48d9888f1595d69572db73be99a024" "6d589ac0e52375d311afaa745205abb6ccb3b21f6ba037104d71111e7e76a3fc" "fe666e5ac37c2dfcf80074e88b9252c71a22b6f5d2f566df9a7aa4f9bea55ef8" "3a3de615f80a0e8706208f0a71bbcc7cc3816988f971b6d237223b6731f91605" "6b2636879127bf6124ce541b1b2824800afc49c6ccd65439d6eb987dbf200c36" "d2e9c7e31e574bf38f4b0fb927aaff20c1e5f92f72001102758005e53d77b8c9" "8dce5b23232d0a490f16d62112d3abff6babeef86ae3853241a85856f9b0a6e7" "d97baf5a34c87b05508739505cad03438cde8efa2a0d350c7773f2a8bc26a50d" "099c44618d7660548701d4f495a8c23a85103bc7b87fec33c9db4cd099a4adaf" default)))
+ '(fci-rule-color "#4C566A")
+ '(jdee-db-active-breakpoint-face-colors (cons "#10151C" "#5EC4FF"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#10151C" "#8BD49C"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#10151C" "#384551"))
  '(markdown-command "/usr/local/bin/pandoc")
  '(package-selected-packages
    (quote
-    (intero interleave elm-mode idris-mode ox-pandoc ox-md markdown-mode undo-tree graphql-mode toc-org rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
+    (zeal-at-point helm-dash doom-themes json-mode auctex exec-path-from-shell terraform-mode tide typescript-mode dockerfile-mode rjsx-mode column-enforce-mode intero interleave elm-mode idris-mode ox-pandoc ox-md markdown-mode undo-tree graphql-mode toc-org rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
+ '(safe-local-variable-values
+   (quote
+    ((intero-targets "resources:lib" "resources:exe:resources-exe" "resources:test:resources-test"))))
  '(vc-annotate-background "#ffffff")
  '(vc-annotate-color-map
    (quote
