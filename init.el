@@ -177,6 +177,14 @@ point reaches the beginning or end of the buffer, stop there."
   (global-undo-tree-mode)
   :ensure t)
 
+;; Typescript
+
+(use-package typescript-mode
+  :ensure t)
+
+(use-package tide
+  :ensure t)
+
 ;; Haskell
 
 (use-package intero
