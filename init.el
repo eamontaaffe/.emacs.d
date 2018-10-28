@@ -151,9 +151,9 @@ point reaches the beginning or end of the buffer, stop there."
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
   :ensure t)
 
-(use-package js2-mode
+(use-package rjsx-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
   (setq js2-basic-offset 2)
   :ensure t)
 
