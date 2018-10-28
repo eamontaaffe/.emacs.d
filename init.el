@@ -46,6 +46,9 @@
 ;; Spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 
+;; Tabs should be two spaces
+(setq-default tab-width 2)
+
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)
 
