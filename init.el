@@ -278,6 +278,11 @@ point reaches the beginning or end of the buffer, stop there."
   (80-column-rule)
   :ensure t)
 
+;; Docker mode
+
+(use-package dockerfile-mode
+  :ensure t)
+
 ;; Custom functions
 
 (defun frame-default ()
