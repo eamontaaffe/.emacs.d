@@ -157,7 +157,9 @@ point reaches the beginning or end of the buffer, stop there."
   (setq js2-basic-offset 2)
   :ensure t)
 
-(use-package twilight-bright-theme
+(use-package doom-themes
+  :config
+  (load-theme 'doom-molokai t)
   :ensure t)
 
 (use-package rainbow-delimiters
