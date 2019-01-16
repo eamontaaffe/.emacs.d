@@ -1,11 +1,17 @@
 (require 'package)
-
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/"))
 
 (package-initialize)
+
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
 
 ;; No splash screen
 (setq inhibit-startup-message t)
@@ -16,12 +22,6 @@
 (tool-bar-mode -1)
 (add-to-list 'default-frame-alist '(height . 300))
 (add-to-list 'default-frame-alist '(width . 80))
-
-;; Set up package management with `use-package`
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
 
 ;;;; Sane defaults ;;;;
 
@@ -129,7 +129,9 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (projectile-global-mode t)
   (helm-projectile-on)
-  :bind (("C-c p ." . helm-projectile-find-file-dwim)))
+  :bind (("C-c p ." . helm-projectile-find-file-dwim)
+         ("C-c p p" . helm-projectile-switch-project)
+         ("C-c p i" . projectile-invalidate-cache)))
 
 (use-package magit
   :ensure t
@@ -146,6 +148,12 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package reason-mode
   :ensure t)
 
+;;; Other stuff ;;;
+
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
 (use-package yaml-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -224,8 +232,8 @@ point reaches the beginning or end of the buffer, stop there."
 
 (setq org-agenda-files '("~/org"))
 
-(use-package ox-pandoc
-  :ensure t)
+;; (use-package ox-pandoc
+;;   :ensure t)
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
@@ -347,7 +355,6 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package racket-mode)
 
 ;; Generated stuff (don't edit)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
