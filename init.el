@@ -240,14 +240,10 @@ point reaches the beginning or end of the buffer, stop there."
 (setq org-capture-templates
       '(("c" "Cadmus task" entry
          (file+headline "~/org/cadmus.org" "Tasks")
-         "** TODO %?\n %i" :prepend t)
-
-        ("k" "Cadmus question" entry
-         (file+headline "~/org/cadmus.org" "Tasks")
-         "** QUESTION %?\n %i" :prepend t)
+         "** TODO [#B] %? :cadmus:\n %i" :prepend t)
         
         ("h" "Home task" entry (file+headline "~/org/home.org" "Tasks")
-         "** TASK %?\n %i" :prepend t)))
+         "** TASK %? :home:\n %i" :prepend t)))
 
 (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
 
@@ -299,10 +295,31 @@ point reaches the beginning or end of the buffer, stop there."
   :ensure t)
 
 ;; Dash documentation
+
 (use-package helm-dash
+  :bind (("C-c d" . helm-dash))
   :config
-  (setq helm-dash-docsets-path "/Users/eamon/Library/Application Support/Dash/DocSets/")
+  (setq helm-dash-docsets-path "~/.docsets/")
+  (setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
+  (setq helm-dash-browser-func 'browse-url-generic)
+  (setq helm-dash-common-docsets '("Redis" "Haskell"))
   :ensure t)
+
+(defun haskell-doc ()
+  (interactive)
+  (setq-local helm-dash-docsets '("Haskell")))
+
+(add-hook 'haskell-mode-hook 'haskell-doc)
+
+;; Engine mode
+
+(use-package engine-mode
+  :config
+  (defengine hoogle
+  "https://www.haskell.org/hoogle/?hoogle=%s"
+  :keybinding "h"
+  :docstring "Searchin' for Haskell types or identifiers."))
 
 ;; Custom functions
 
@@ -314,7 +331,20 @@ point reaches the beginning or end of the buffer, stop there."
 (defun frame-double ()
   (interactive)
   (if (window-system)
-      (set-frame-size (selected-frame) 163 100)))  
+      (set-frame-size (selected-frame) 163 100)))
+
+;; Dhall
+
+(use-package dhall-mode
+  :init
+  (setq dhall-format-command nil)
+  (setq dhall-at-save nil)
+  (setq dhall-use-header-line nil)
+  :mode "\\.dhall\\'")
+
+;; Racket
+
+(use-package racket-mode)
 
 ;; Generated stuff (don't edit)
 
@@ -333,9 +363,10 @@ point reaches the beginning or end of the buffer, stop there."
  '(jdee-db-requested-breakpoint-face-colors (cons "#10151C" "#8BD49C"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#10151C" "#384551"))
  '(markdown-command "/usr/local/bin/pandoc")
+ '(org-tags-column -65)
  '(package-selected-packages
    (quote
-    (zeal-at-point helm-dash doom-themes json-mode auctex exec-path-from-shell terraform-mode tide typescript-mode dockerfile-mode rjsx-mode column-enforce-mode intero interleave elm-mode idris-mode ox-pandoc ox-md markdown-mode undo-tree graphql-mode toc-org rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
+    (neotree fsharp-mode elixir-mode synonymous cider racket-mode dhall-mode engine-mode zeal-at-point helm-dash doom-themes json-mode auctex exec-path-from-shell terraform-mode tide typescript-mode dockerfile-mode rjsx-mode column-enforce-mode intero interleave elm-mode idris-mode ox-pandoc ox-md markdown-mode undo-tree graphql-mode toc-org rainbow-delimiters web-mode exec-path helm-ag basic-theme white-theme twilight-bright-theme reason-mode multiple-cursors magit helm-projectile helm projectile)))
  '(safe-local-variable-values
    (quote
     ((intero-targets "resources:lib" "resources:exe:resources-exe" "resources:test:resources-test"))))
@@ -361,3 +392,4 @@ point reaches the beginning or end of the buffer, stop there."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'narrow-to-region 'disabled nil)
