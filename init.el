@@ -209,20 +209,3 @@ point reaches the beginning or end of the buffer, stop there."
 (defun font-medium ()
   (interactive)
   (set-face-attribute 'default nil :height 120))
-
-;; Generated stuff, don't edit
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (markdown-mode undo-tree rainbow-delimiters doom-themes multiple-cursors magit helm-ag helm-projectile helm-ls-git helm use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
