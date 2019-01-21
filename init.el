@@ -9,6 +9,10 @@
 
 (package-initialize)
 
+;; Variables
+
+(defvar window-height 40)
+
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -24,8 +28,8 @@
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(add-to-list 'default-frame-alist '(height . 80))
-(add-to-list 'default-frame-alist '(width . 80))
+(add-to-list 'default-frame-alist '(height . window-height))
+(add-to-list 'default-frame-alist '(width . window-height))
 (set-face-attribute 'default nil :height 120)
 
 ;;;; Sane defaults ;;;;
@@ -191,12 +195,12 @@ point reaches the beginning or end of the buffer, stop there."
 (defun frame-single ()
   (interactive)
   (if (window-system)
-      (set-frame-size (selected-frame) 80 80)))
+      (set-frame-size (selected-frame) 80 window-height)))
 
 (defun frame-double ()
   (interactive)
   (if (window-system)
-      (set-frame-size (selected-frame) 163 80)))
+      (set-frame-size (selected-frame) 163 window-height)))
 
 (defun font-large ()
   (interactive)
