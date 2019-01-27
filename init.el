@@ -191,7 +191,6 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Custom functions
 
-
 (defun frame-single ()
   (interactive)
   (if (window-system)
@@ -209,3 +208,7 @@ point reaches the beginning or end of the buffer, stop there."
 (defun font-medium ()
   (interactive)
   (set-face-attribute 'default nil :height 120))
+
+(defun font-small ()
+  (interactive)
+  (set-face-attribute 'default nil :height 105))
