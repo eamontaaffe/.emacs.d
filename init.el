@@ -202,9 +202,11 @@ point reaches the beginning or end of the buffer, stop there."
 
   (setq org-default-notes-file (concat org-directory "/notes.org"))
 
-(setq org-time-clocksum-use-fractional 1)
+  (define-key global-map "\C-cc" 'org-capture)
 
-(setq org-agenda-files '("~/org"))
+  (setq org-capture-templates
+        '(("c" "Cultureamp task" entry (file+headline "~/org/notes.org" "Tasks")
+           "** TODO %? :cultureamp:\n %i" :prepend t)))
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
