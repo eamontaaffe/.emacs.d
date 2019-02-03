@@ -171,9 +171,9 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;;; Other stuff ;;;
 
-(use-package doom-themes
+(use-package twilight-bright-theme
   :config
-  (load-theme 'doom-molokai t)
+  (load-theme 'twilight-bright t)
   :ensure t)
 
 (use-package rainbow-delimiters
