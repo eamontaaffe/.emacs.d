@@ -3,9 +3,11 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 (package-initialize)
 
-;; Bootstrap `use-package'
+;; Bootstrap `use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -80,13 +82,16 @@ point reaches the beginning or end of the buffer, stop there."
 		'smarter-move-beginning-of-line)
 
 ;; UTF-8
+
 (prefer-coding-system 'utf-8)
+
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
 ;;;; Backups ;;;;
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
 (setq delete-old-versions -1)
 
 ;; Turn off bell
@@ -94,6 +99,7 @@ point reaches the beginning or end of the buffer, stop there."
 (setq ring-bell-function 'ignore)
 
 ;; Automatically reload files that have changed
+
 (global-auto-revert-mode t)
 
 ;;;; Package stuff ;;;;
