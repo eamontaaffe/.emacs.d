@@ -184,7 +184,23 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Org mode
 
-(global-set-key "\C-ca" 'org-agenda)
+(use-package org
+  :config
+  (global-set-key "\C-ca" 'org-agenda)
+
+  (setq org-time-clocksum-use-fractional 1)
+
+  (setq org-agenda-files '("~/org"))
+
+  (add-hook 'org-mode-hook 'visual-line-mode)
+
+  (setq org-duration-format (quote h:mm))
+
+  (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
+
+  (setq org-tags-column 0)
+
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
 
 (setq org-time-clocksum-use-fractional 1)
 
