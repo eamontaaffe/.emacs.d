@@ -19,10 +19,12 @@
 (setq inhibit-startup-message t)
 
 ;; Window
+(defvar default-window-height 40)
+
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(add-to-list 'default-frame-alist '(height . 80))
+(add-to-list 'default-frame-alist '(height . default-window-height))
 (add-to-list 'default-frame-alist '(width . 80))
 (set-face-attribute 'default nil :height 120)
 
@@ -203,12 +205,12 @@ point reaches the beginning or end of the buffer, stop there."
 (defun frame-single ()
   (interactive)
   (if (window-system)
-      (set-frame-size (selected-frame) 80 80)))
+      (set-frame-size (selected-frame) 80 default-window-height)))
 
 (defun frame-double ()
   (interactive)
   (if (window-system)
-      (set-frame-size (selected-frame) 163 80)))
+      (set-frame-size (selected-frame) 163 default-window-height)))
 
 (defun font-large ()
   (interactive)
