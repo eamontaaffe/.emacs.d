@@ -212,9 +212,9 @@ point reaches the beginning or end of the buffer, stop there."
         '(("c" "Cultureamp task" entry (file+headline "~/org/notes.org" "Tasks")
            "** TODO %? :cultureamp:\n %i" :prepend t)))
 
-(add-hook 'org-mode-hook 'visual-line-mode)
+  (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
 
-(setq org-duration-format (quote h:mm))
+  :ensure t)
 
 ;; Markdown
 
