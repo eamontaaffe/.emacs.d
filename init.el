@@ -228,6 +228,15 @@ point reaches the beginning or end of the buffer, stop there."
   (load "digdag-mode")
   :ensure t)
 
+;; 80 column rule
+
+(use-package whitespace
+  :init
+  (setq whitespace-line-column 80)
+  (setq whitespace-style '(face lines-tail))
+  (add-hook 'prog-mode-hook 'whitespace-mode))
+
+;; Custom functions
 
 (defun frame-single ()
   (interactive)
