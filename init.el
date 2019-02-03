@@ -221,7 +221,12 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package markdown-mode
   :ensure t)
 
-;; Custom functions
+;; Digdag
+
+(use-package yaml-mode
+  :config
+  (load "digdag-mode")
+  :ensure t)
 
 
 (defun frame-single ()
