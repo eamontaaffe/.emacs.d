@@ -121,6 +121,15 @@ point reaches the beginning or end of the buffer, stop there."
          ("M-y" . helm-show-kill-ring))
   :ensure t)
 
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+  :ensure t)
+
+(use-package ag
+  :ensure t)
+
 (use-package helm-projectile
   :ensure t)
 
@@ -139,7 +148,8 @@ point reaches the beginning or end of the buffer, stop there."
   (helm-projectile-on)
   :bind (("C-c p ." . helm-projectile-find-file-dwim)
          ("C-c p p" . helm-projectile-switch-project)
-         ("C-c p i" . projectile-invalidate-cache)))
+         ("C-c p i" . projectile-invalidate-cache)
+         ("C-c p s s" . projectile-ag)))
 
 (use-package magit
   :ensure t
