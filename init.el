@@ -34,6 +34,9 @@
 
 (setq custom-file "./custom.el")
 
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;; Allow pasting from system clipboard
 (setq x-select-enable-clipboard t)
 
@@ -255,3 +258,7 @@ point reaches the beginning or end of the buffer, stop there."
 (defun font-medium ()
   (interactive)
   (set-face-attribute 'default nil :height 120))
+
+(defun font-small ()
+  (interactive)
+  (set-face-attribute 'default nil :height 105))
