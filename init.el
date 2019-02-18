@@ -31,6 +31,7 @@
 (add-to-list 'default-frame-alist '(height . window-height))
 (add-to-list 'default-frame-alist '(width . window-height))
 (set-face-attribute 'default nil :height 120)
+(fringe-mode 16)
 
 ;;;; Sane defaults ;;;;
 
@@ -192,6 +193,14 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Markdown
 
 (use-package markdown-mode
+  :ensure t)
+
+;; Visualise Git Diffs
+
+(use-package diff-hl
+  :config
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  (global-diff-hl-mode)
   :ensure t)
 
 ;; Custom functions
