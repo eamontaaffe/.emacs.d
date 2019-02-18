@@ -1,5 +1,10 @@
 # Ignore everything
 *
+!*/
+elpa/
 
-# Except for the init.el file
+# Except for files with these names
+!.gitignore
 !init.el
+!custom.el
+!lisp/*

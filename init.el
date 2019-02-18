@@ -3,17 +3,11 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
-(setq custom-file (concat user-emacs-directory "custom.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
 (package-initialize)
 
-;; Variables
-
-(defvar window-height 40)
-
-;; Bootstrap `use-package'
+;; Bootstrap `use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -25,15 +19,24 @@
 (setq inhibit-startup-message t)
 
 ;; Window
+(defvar default-window-height 40)
+
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(add-to-list 'default-frame-alist '(height . window-height))
-(add-to-list 'default-frame-alist '(width . window-height))
+(add-to-list 'default-frame-alist '(height . default-window-height))
+(add-to-list 'default-frame-alist '(width . 80))
 (set-face-attribute 'default nil :height 120)
 (fringe-mode 16)
 
 ;;;; Sane defaults ;;;;
+
+;; Move custom set variables into different file
+
+(setq custom-file "./custom.el")
+
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 ;; Allow pasting from system clipboard
 (setq x-select-enable-clipboard t)
@@ -89,13 +92,16 @@ point reaches the beginning or end of the buffer, stop there."
 		'smarter-move-beginning-of-line)
 
 ;; UTF-8
+
 (prefer-coding-system 'utf-8)
+
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
 ;;;; Backups ;;;;
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
 (setq delete-old-versions -1)
 
 ;; Turn off bell
@@ -103,6 +109,7 @@ point reaches the beginning or end of the buffer, stop there."
 (setq ring-bell-function 'ignore)
 
 ;; Automatically reload files that have changed
+
 (global-auto-revert-mode t)
 
 ;;;; Package stuff ;;;;
@@ -124,6 +131,15 @@ point reaches the beginning or end of the buffer, stop there."
          ("M-y" . helm-show-kill-ring))
   :ensure t)
 
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+  :ensure t)
+
+(use-package ag
+  :ensure t)
+
 (use-package helm-projectile
   :ensure t)
 
@@ -142,7 +158,8 @@ point reaches the beginning or end of the buffer, stop there."
   (helm-projectile-on)
   :bind (("C-c p ." . helm-projectile-find-file-dwim)
          ("C-c p p" . helm-projectile-switch-project)
-         ("C-c p i" . projectile-invalidate-cache)))
+         ("C-c p i" . projectile-invalidate-cache)
+         ("C-c p s s" . projectile-ag)))
 
 (use-package magit
   :ensure t
@@ -158,9 +175,9 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;;; Other stuff ;;;
 
-(use-package doom-themes
+(use-package twilight-bright-theme
   :config
-  (load-theme 'doom-molokai t)
+  (load-theme 'twilight-bright t)
   :ensure t)
 
 (use-package rainbow-delimiters
@@ -175,15 +192,33 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Org mode
 
-(global-set-key "\C-ca" 'org-agenda)
+(use-package org
+  :config
+  (global-set-key "\C-ca" 'org-agenda)
 
-(setq org-time-clocksum-use-fractional 1)
+  (setq org-time-clocksum-use-fractional 1)
 
-(setq org-agenda-files '("~/org"))
+  (setq org-agenda-files '("~/org"))
 
-(add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'org-mode-hook 'visual-line-mode)
 
-(setq org-duration-format (quote h:mm))
+  (setq org-duration-format (quote h:mm))
+
+  (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
+
+  (setq org-tags-column 0)
+
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+
+  (define-key global-map "\C-cc" 'org-capture)
+
+  (setq org-capture-templates
+        '(("c" "Cultureamp task" entry (file+headline "~/org/notes.org" "Tasks")
+           "** TODO %? :cultureamp:\n %i" :prepend t)))
+
+  (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
+
+  :ensure t)
 
 ;; Elixir
 
@@ -203,17 +238,32 @@ point reaches the beginning or end of the buffer, stop there."
   (global-diff-hl-mode)
   :ensure t)
 
+;; Digdag
+
+(use-package yaml-mode
+  :config
+  (load "digdag-mode")
+  :ensure t)
+
+;; 80 column rule
+
+(use-package whitespace
+  :init
+  (setq whitespace-line-column 80)
+  (setq whitespace-style '(face lines-tail))
+  (add-hook 'prog-mode-hook 'whitespace-mode))
+
 ;; Custom functions
 
 (defun frame-single ()
   (interactive)
   (if (window-system)
-      (set-frame-size (selected-frame) 80 window-height)))
+      (set-frame-size (selected-frame) 80 default-window-height)))
 
 (defun frame-double ()
   (interactive)
   (if (window-system)
-      (set-frame-size (selected-frame) 163 window-height)))
+      (set-frame-size (selected-frame) 163 default-window-height)))
 
 (defun font-large ()
   (interactive)
