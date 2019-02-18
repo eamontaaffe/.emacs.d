@@ -184,6 +184,11 @@ point reaches the beginning or end of the buffer, stop there."
 
 (setq org-duration-format (quote h:mm))
 
+;; Elixir
+
+(use-package alchemist
+  :ensure t)
+
 ;; Markdown
 
 (use-package markdown-mode
