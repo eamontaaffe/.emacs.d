@@ -254,6 +254,11 @@ point reaches the beginning or end of the buffer, stop there."
   (setq whitespace-style '(face lines-tail trailing))
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
+;; Scala
+
+(use-package ensime
+  :ensure t)
+
 ;; Custom functions
 
 (defun frame-single ()
