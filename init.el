@@ -27,6 +27,7 @@
 (add-to-list 'default-frame-alist '(height . default-window-height))
 (add-to-list 'default-frame-alist '(width . 80))
 (set-face-attribute 'default nil :height 150)
+(fringe-mode 16)
 
 ;;;; Sane defaults ;;;;
 
@@ -234,9 +235,22 @@ point reaches the beginning or end of the buffer, stop there."
 
   :ensure t)
 
+;; Elixir
+
+(use-package alchemist
+  :ensure t)
+
 ;; Markdown
 
 (use-package markdown-mode
+  :ensure t)
+
+;; Visualise Git Diffs
+
+(use-package diff-hl
+  :config
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  (global-diff-hl-mode)
   :ensure t)
 
 ;; Digdag
