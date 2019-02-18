@@ -26,7 +26,7 @@
 (tool-bar-mode -1)
 (add-to-list 'default-frame-alist '(height . default-window-height))
 (add-to-list 'default-frame-alist '(width . 80))
-(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'default nil :height 150)
 
 ;;;; Sane defaults ;;;;
 
@@ -134,6 +134,7 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
+  (add-to-list 'exec-path "/usr/local/bin/")
   :ensure t)
 
 (use-package ag
@@ -143,8 +144,6 @@ point reaches the beginning or end of the buffer, stop there."
   :ensure t)
 
 (use-package helm-ag
-  :config
-  (add-to-list 'exec-path "/usr/local/bin/")
   :ensure t)
 
 (use-package projectile
@@ -236,7 +235,7 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package whitespace
   :init
   (setq whitespace-line-column 80)
-  (setq whitespace-style '(face lines-tail))
+  (setq whitespace-style '(face lines-tail trailing))
   (add-hook 'prog-mode-hook 'whitespace-mode))
 
 ;; Custom functions
