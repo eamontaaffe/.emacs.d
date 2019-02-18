@@ -178,6 +178,22 @@ point reaches the beginning or end of the buffer, stop there."
   (load-theme 'twilight-bright t)
   :ensure t)
 
+(use-package doom-themes
+  :ensure t)
+
+;; Toggle themes
+;; TODO: This is super naiive. It should check if theme is enabled first
+
+(defun dark-theme ()
+  (interactive)
+  (disable-theme 'twilight-bright)
+  (load-theme 'doom-molokai))
+
+(defun light-theme ()
+  (interactive)
+  (disable-theme 'doom-bright)
+  (load-theme 'twilight-bright))
+
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
