@@ -282,6 +282,11 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package ensime
   :ensure t)
 
+;; Term paste
+
+(eval-after-load "term"
+  '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+
 ;; Custom functions
 
 (defun frame-single ()
