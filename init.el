@@ -163,7 +163,9 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package magit
   :ensure t
   :config
-  (global-set-key (kbd "C-x g") 'magit-status))
+  (global-set-key (kbd "C-x g") 'magit-status)
+  (setq magit-display-buffer-function
+        #'magit-display-buffer-fullframe-status-v1))
 
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
