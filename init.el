@@ -255,6 +255,13 @@ point reaches the beginning or end of the buffer, stop there."
   (global-diff-hl-mode)
   :ensure t)
 
+;; Highlight Indentation
+
+(use-package highlight-indentation
+  :config
+  (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode)
+  :ensure t)
+
 ;; Digdag
 
 (use-package yaml-mode
