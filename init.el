@@ -297,15 +297,18 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Custom functions
 
-(defun frame-single ()
+(defun frame-default ()
   (interactive)
   (if (window-system)
       (set-frame-size (selected-frame) 80 default-window-height)))
 
-(defun frame-double ()
+(defun frame-double-wide ()
   (interactive)
-  (if (window-system)
-      (set-frame-size (selected-frame) 163 default-window-height)))
+  (set-frame-width (selected-frame) 163))
+
+(defun frame-single-wide ()
+  (interactive)
+  (set-frame-width (selected-frame) 80))
 
 (defun font-large ()
   (interactive)
@@ -318,3 +321,4 @@ point reaches the beginning or end of the buffer, stop there."
 (defun font-small ()
   (interactive)
   (set-face-attribute 'default nil :height 105))
+(put 'narrow-to-region 'disabled nil)
