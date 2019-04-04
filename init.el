@@ -177,26 +177,17 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;;; Other stuff ;;;
 
-(use-package twilight-bright-theme
-  :config
-  (load-theme 'twilight-bright t)
-  :ensure t)
+;; Light theme
+;; (use-package twilight-bright-theme
+;;   :config
+;;   (load-theme 'twilight-bright t)
+;;   :ensure t)
 
+;; Dark theme
 (use-package doom-themes
+  :config
+  (load-theme 'doom-molokai t)
   :ensure t)
-
-;; Toggle themes
-;; TODO: This is super naiive. It should check if theme is enabled first
-
-(defun dark-theme ()
-  (interactive)
-  (disable-theme 'twilight-bright)
-  (load-theme 'doom-molokai))
-
-(defun light-theme ()
-  (interactive)
-  (disable-theme 'doom-bright)
-  (load-theme 'twilight-bright))
 
 (use-package rainbow-delimiters
   :config
