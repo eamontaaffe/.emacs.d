@@ -19,6 +19,7 @@
 (setq inhibit-startup-message t)
 
 ;; Window
+
 (defvar default-window-height 40)
 
 (menu-bar-mode -1)
@@ -286,6 +287,13 @@ point reaches the beginning or end of the buffer, stop there."
 
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+
+;; Multi-term
+
+(use-package multi-term
+  :init
+  (setq multi-term-program "/bin/zsh")
+  :ensure t)
 
 ;; Custom functions
 
