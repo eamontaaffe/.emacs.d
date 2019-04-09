@@ -286,6 +286,14 @@ point reaches the beginning or end of the buffer, stop there."
   (setq multi-term-program "/bin/zsh")
   :ensure t)
 
+;; Drag stuff
+
+(use-package drag-stuff
+  :config
+  (drag-stuff-define-keys)
+  (drag-stuff-global-mode 1)
+  :ensure t)
+
 ;; Custom functions
 
 (defun frame-default ()
@@ -312,4 +320,3 @@ point reaches the beginning or end of the buffer, stop there."
 (defun font-small ()
   (interactive)
   (set-face-attribute 'default nil :height 105))
-(put 'narrow-to-region 'disabled nil)
