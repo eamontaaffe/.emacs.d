@@ -272,6 +272,8 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Scala
 
 (use-package ensime
+  :init
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
   :ensure t)
 
 ;; Term paste
