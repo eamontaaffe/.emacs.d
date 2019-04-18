@@ -227,6 +227,16 @@ point reaches the beginning or end of the buffer, stop there."
 
   (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
 
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)))
+
+  :ensure t)
+
+(use-package ox-gfm
+  :config
+  (eval-after-load "org"
+    '(require 'ox-gfm nil t))
   :ensure t)
 
 ;; Elixir
