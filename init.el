@@ -1,13 +1,22 @@
 (require 'package)
-(setq package-enable-at-startup nil)
+
+(setq package-enable-at-startup
+      nil)
+
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
 (package-initialize)
 
+;; Customs file
+
+(setq custom-file "~/.emacs.d/custom.el")
+
+(if (file-exists-p custom-file)
+    (load custom-file))
+
 ;; Bootstrap `use-package
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -16,6 +25,7 @@
   (require 'use-package))
 
 ;; No splash screen
+
 (setq inhibit-startup-message t)
 
 ;; Window
@@ -25,48 +35,45 @@
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(add-to-list 'default-frame-alist '(height . default-window-height))
-(add-to-list 'default-frame-alist '(width . 80))
-(set-face-attribute 'default nil :height 150)
-(fringe-mode 16)
-
-;;;; Sane defaults ;;;;
-
-;; Move custom set variables into different file
-
-(setq custom-file "./custom.el")
-
-(when (file-exists-p custom-file)
-  (load custom-file))
 
 ;; Allow pasting from system clipboard
+
 (setq x-select-enable-clipboard t)
 
 ;; Show keystrokes in progress
+
 (setq echo-keystrokes 0.1)
 
 ;; Show keystrokes in progress
+
 (setq echo-keystrokes 0.1)
 
 ;; Answering just 'y' or 'n' will do
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Lines should be 80 characters wide, not 72
+
 (setq fill-column 80)
 
 ;; 80 chars is a good width.
+
 (set-default 'fill-column 80)
 
 ;; Spaces instead of tabs
+
 (setq-default indent-tabs-mode nil)
 
 ;; Tabs should be two spaces
+
 (setq-default tab-width 2)
 
 ;; Remove text in active region if inserting text
+
 (delete-selection-mode 1)
 
 ;; Beginning of line
+
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
 Move point to the first non-whitespace character on this line.
@@ -88,7 +95,8 @@ point reaches the beginning or end of the buffer, stop there."
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
 
-;; remap C-a to `smarter-move-beginning-of-line'
+;; Remap C-a to `smarter-move-beginning-of-line'
+
 (global-set-key [remap move-beginning-of-line]
 		'smarter-move-beginning-of-line)
 
@@ -99,9 +107,10 @@ point reaches the beginning or end of the buffer, stop there."
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
-;;;; Backups ;;;;
+;; Backups
 
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq backup-directory-alist
+      '(("." . "~/.emacs.d/backups")))
 
 (setq delete-old-versions -1)
 
@@ -175,20 +184,6 @@ point reaches the beginning or end of the buffer, stop there."
          ("C-c C-<" . mc/mark-all-like-this))
   :ensure t)
 
-;;; Other stuff ;;;
-
-;; Light theme
-;; (use-package twilight-bright-theme
-;;   :config
-;;   (load-theme 'twilight-bright t)
-;;   :ensure t)
-
-;; Dark theme
-(use-package doom-themes
-  :config
-  (load-theme 'doom-molokai t)
-  :ensure t)
-
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -199,49 +194,9 @@ point reaches the beginning or end of the buffer, stop there."
   (global-undo-tree-mode)
   :ensure t)
 
-;; Org mode
+;; Clojure
 
-(use-package org
-  :config
-  (global-set-key "\C-ca" 'org-agenda)
-
-  (setq org-time-clocksum-use-fractional 1)
-
-  (setq org-agenda-files '("~/org"))
-
-  (add-hook 'org-mode-hook 'visual-line-mode)
-
-  (setq org-duration-format (quote h:mm))
-
-  (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
-
-  (setq org-tags-column 0)
-
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
-
-  (define-key global-map "\C-cc" 'org-capture)
-
-  (setq org-capture-templates
-        '(("c" "Cultureamp task" entry (file+headline "~/org/notes.org" "Tasks")
-           "** TODO %? :cultureamp:\n %i" :prepend t)))
-
-  (define-key global-map "\C-cj" 'org-clock-jump-to-current-clock)
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((shell . t)))
-
-  :ensure t)
-
-(use-package ox-gfm
-  :config
-  (eval-after-load "org"
-    '(require 'ox-gfm nil t))
-  :ensure t)
-
-;; Elixir
-
-(use-package alchemist
+(use-package clojure-mode
   :ensure t)
 
 ;; Markdown
@@ -264,13 +219,6 @@ point reaches the beginning or end of the buffer, stop there."
   (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode)
   :ensure t)
 
-;; Digdag
-
-(use-package yaml-mode
-  :config
-  (load "digdag-mode")
-  :ensure t)
-
 ;; 80 column rule
 
 (use-package whitespace
@@ -290,21 +238,6 @@ point reaches the beginning or end of the buffer, stop there."
 
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
-
-;; Multi-term
-
-(use-package multi-term
-  :init
-  (setq multi-term-program "/bin/zsh")
-  :ensure t)
-
-;; Drag stuff
-
-(use-package drag-stuff
-  :config
-  (drag-stuff-define-keys)
-  (drag-stuff-global-mode 1)
-  :ensure t)
 
 ;; Custom functions
 
