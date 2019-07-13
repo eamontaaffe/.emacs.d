@@ -249,6 +249,15 @@ point reaches the beginning or end of the buffer, stop there."
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1)
+  :bind
+  (("C-c p ." . projectile-find-file))
+  :ensure t)
+
+;; Counsel projectile extension
+
+(use-package counsel-projectile
+  :bind
+  (("C-c p s s" . counsel-projectile-ag))
   :ensure t)
 
 ;; Custom functions
