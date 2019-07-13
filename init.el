@@ -250,7 +250,7 @@ point reaches the beginning or end of the buffer, stop there."
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1)
   :bind
-  (("C-c p ." . projectile-find-file))
+  (("C-c p p" . projectile-switch-project))
   :ensure t)
 
 ;; Counsel projectile extension
@@ -258,6 +258,17 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package counsel-projectile
   :bind
   (("C-c p s s" . counsel-projectile-ag))
+  :ensure t)
+
+;; Light theme
+
+(use-package twilight-bright-theme
+  :disabled
+  :ensure t)
+
+;; Dark theme
+
+(use-package twilight-anti-bright-theme
   :ensure t)
 
 ;; Custom functions
@@ -286,3 +297,4 @@ point reaches the beginning or end of the buffer, stop there."
 (defun font-small ()
   (interactive)
   (set-face-attribute 'default nil :height 105))
+
