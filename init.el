@@ -130,8 +130,6 @@ point reaches the beginning or end of the buffer, stop there."
 
 (show-paren-mode 1)
 
-;;;; Package stuff ;;;;
-
 ;; Magit
 
 (use-package magit
@@ -201,6 +199,57 @@ point reaches the beginning or end of the buffer, stop there."
 
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
+
+;; Ivy
+
+(use-package ivy
+  :init
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  :config
+  (ivy-mode 1)
+  :bind
+  (("C-c C-r" . ivy-resume)
+   ("<f6>" . ivy-resume))
+  :ensure t)
+
+;; Swiper
+
+(use-package swiper
+  :bind
+  (("\C-s" . swiper))
+  :requires ivy
+  :ensure t)
+
+;; Counsel
+
+(use-package counsel
+  :bind
+  (("M-x" . counsel-M-x)
+   ("C-x C-f" . counsel-find-file)
+   ("<f1> f" . counsel-describe-function)
+   ("<f1> v" . counsel-describe-variable)
+   ("<f1> l" . counsel-find-library)
+   ("<f2> i" . counsel-info-lookup-symbol)
+   ("<f2> u" . counsel-unicode-char)
+   ("C-c g" . counsel-git)
+   ("C-c j" . counsel-git-grep)
+   ("C-c k" . counsel-ag)
+   ("C-x l" . counsel-locate)
+   ("C-S-o" . counsel-rhythmbox))
+  :requires ivy
+  :ensure t)
+
+;; Projectile
+
+(use-package projectile
+  :init
+  (setq projectile-completion-system 'ivy)
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1)
+  :ensure t)
 
 ;; Custom functions
 
