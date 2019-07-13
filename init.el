@@ -8,7 +8,7 @@
 
 (package-initialize)
 
-;; Customs file
+;; Custom file
 
 (setq custom-file "~/.emacs.d/custom.el")
 
@@ -124,51 +124,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;;;; Package stuff ;;;;
 
-(use-package helm
-  :config
-  (helm-mode 1)
-  (require 'helm-config)
-
-  :bind (("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("C-c h" . helm-mini)
-         ("C-x C-b" . helm-buffers-list))
-  :ensure t)
-
-(use-package helm-ls-git
-  :bind (("C-c g" . helm-ls-git-ls)
-         ("C-x C-d" . helm-browse-project)
-         ("M-y" . helm-show-kill-ring))
-  :ensure t)
-
-(use-package exec-path-from-shell
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize))
-  (add-to-list 'exec-path "/usr/local/bin/")
-  :ensure t)
-
-(use-package ag
-  :ensure t)
-
-(use-package helm-projectile
-  :ensure t)
-
-(use-package helm-ag
-  :ensure t)
-
-(use-package projectile
-  :ensure t
-  :init
-  (setq projectile-enable-caching t)
-  (setq projectile-completion-system 'helm)
-  :config
-  (projectile-global-mode t)
-  (helm-projectile-on)
-  :bind (("C-c p ." . helm-projectile-find-file-dwim)
-         ("C-c p p" . helm-projectile-switch-project)
-         ("C-c p i" . projectile-invalidate-cache)
-         ("C-c p s s" . projectile-ag)))
+;; Magit
 
 (use-package magit
   :ensure t
@@ -177,6 +133,8 @@ point reaches the beginning or end of the buffer, stop there."
   (setq magit-display-buffer-function
         #'magit-display-buffer-fullframe-status-v1))
 
+;; Multiple cursors
+
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
@@ -184,10 +142,7 @@ point reaches the beginning or end of the buffer, stop there."
          ("C-c C-<" . mc/mark-all-like-this))
   :ensure t)
 
-(use-package rainbow-delimiters
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-  :ensure t)
+;; Undo tree
 
 (use-package undo-tree
   :config
