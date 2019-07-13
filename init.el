@@ -237,8 +237,8 @@
 ;; Counsel projectile extension
 
 (use-package counsel-projectile
-  :bind
-  (("C-c p s s" . counsel-projectile-ag))
+  :config
+  (counsel-projectile-mode)
   :ensure t)
 
 ;; Light theme
