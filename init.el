@@ -1,3 +1,19 @@
+;; No splash screen
+
+(setq inhibit-startup-message t)
+
+;; Window
+
+(defvar default-window-height 40)
+
+(menu-bar-mode -1)
+
+(toggle-scroll-bar -1)
+
+(tool-bar-mode -1)
+
+;; Package
+
 (require 'package)
 
 (setq package-enable-at-startup
@@ -23,18 +39,6 @@
 
 (eval-when-compile
   (require 'use-package))
-
-;; No splash screen
-
-(setq inhibit-startup-message t)
-
-;; Window
-
-(defvar default-window-height 40)
-
-(menu-bar-mode -1)
-(toggle-scroll-bar -1)
-(tool-bar-mode -1)
 
 ;; Allow pasting from system clipboard
 
@@ -121,6 +125,10 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Automatically reload files that have changed
 
 (global-auto-revert-mode t)
+
+;; Show parens (bracket matching)
+
+(show-paren-mode 1)
 
 ;;;; Package stuff ;;;;
 
