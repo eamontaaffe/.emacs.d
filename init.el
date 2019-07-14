@@ -113,6 +113,13 @@ point reaches the beginning or end of the buffer, stop there."
 
 (global-auto-revert-mode t)
 
+;; Change windows
+
+(global-set-key (kbd "C-x <up>") 'windmove-up)
+(global-set-key (kbd "C-x <down>") 'windmove-down)
+(global-set-key (kbd "C-x <left>") 'windmove-left)
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+
 ;;;; Package stuff ;;;;
 
 (use-package helm
@@ -161,12 +168,20 @@ point reaches the beginning or end of the buffer, stop there."
          ("C-c p i" . projectile-invalidate-cache)
          ("C-c p s s" . projectile-ag)))
 
+;; Magit
+
 (use-package magit
   :ensure t
   :config
   (global-set-key (kbd "C-x g") 'magit-status)
   (setq magit-display-buffer-function
         #'magit-display-buffer-fullframe-status-v1))
+
+(use-package forge
+  :after magit
+  :ensure t)
+
+;; Multiple cursors
 
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
@@ -178,16 +193,16 @@ point reaches the beginning or end of the buffer, stop there."
 ;;; Other stuff ;;;
 
 ;; Light theme
-;; (use-package twilight-bright-theme
-;;   :config
-;;   (load-theme 'twilight-bright t)
-;;   :ensure t)
+(use-package twilight-bright-theme
+  :config
+  (load-theme 'twilight-bright t)
+  :ensure t)
 
 ;; Dark theme
-(use-package doom-themes
-  :config
-  (load-theme 'doom-molokai t)
-  :ensure t)
+;; (use-package doom-themes
+;;   :config
+;;   (load-theme 'doom-molokai t)
+;;   :Ensure t)
 
 (use-package rainbow-delimiters
   :config
@@ -229,14 +244,35 @@ point reaches the beginning or end of the buffer, stop there."
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((shell . t)))
+   '((shell . t)
+     (ledger . t)
+     (python . t)
+     (sql . t)
+     (ditaa . t)
+     (http . t)))
 
+  (setq org-babel-python-command "python3")
+
+  :ensure t)
+
+(use-package ob-http
+  :ensure t)
+
+(use-package racket-mode
   :ensure t)
 
 (use-package ox-gfm
   :config
   (eval-after-load "org"
     '(require 'ox-gfm nil t))
+  :ensure t)
+
+;; Clojure
+
+(use-package slime
+  :ensure t)
+
+(use-package clojure-mode
   :ensure t)
 
 ;; Elixir
@@ -305,6 +341,22 @@ point reaches the beginning or end of the buffer, stop there."
   (drag-stuff-define-keys)
   (drag-stuff-global-mode 1)
   :ensure t)
+
+;; String manipulation library
+
+(use-package s
+  :ensure t)
+
+;; Centered window layout
+
+(use-package olivetti
+  :init
+  (setq olivetti-body-width 80)
+  :ensure t)
+
+;; Clojure
+
+
 
 ;; Custom functions
 
