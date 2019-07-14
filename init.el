@@ -76,6 +76,42 @@
 
 (delete-selection-mode 1)
 
+;; Disable minimise (I keep accidentally pressing it)
+
+(global-unset-key (kbd "C-z"))
+
+;; Custom functions
+
+(defun frame-default ()
+  (interactive)
+  (if (window-system)
+      (set-frame-size (selected-frame) 80 default-window-height)))
+
+(defun frame-double-wide ()
+  (interactive)
+  (set-frame-width (selected-frame) 163))
+
+(defun frame-single-wide ()
+  (interactive)
+  (set-frame-width (selected-frame) 80))
+
+(defun font-large ()
+  (interactive)
+  (set-face-attribute 'default nil :height 150))
+
+(defun font-medium ()
+  (interactive)
+  (set-face-attribute 'default nil :height 120))
+
+(defun font-small ()
+  (interactive)
+  (set-face-attribute 'default nil :height 105))
+
+;; Mac setup
+
+(if (string-equal system-type "darwin")
+    (font-large))
+
 ;; Crux (mostly for to replace smarter beginning of line)
 
 (use-package crux
@@ -264,31 +300,3 @@
   :init
   (setq olivetti-body-width 80)
   :ensure t)
-
-;; Custom functions
-
-(defun frame-default ()
-  (interactive)
-  (if (window-system)
-      (set-frame-size (selected-frame) 80 default-window-height)))
-
-(defun frame-double-wide ()
-  (interactive)
-  (set-frame-width (selected-frame) 163))
-
-(defun frame-single-wide ()
-  (interactive)
-  (set-frame-width (selected-frame) 80))
-
-(defun font-large ()
-  (interactive)
-  (set-face-attribute 'default nil :height 150))
-
-(defun font-medium ()
-  (interactive)
-  (set-face-attribute 'default nil :height 120))
-
-(defun font-small ()
-  (interactive)
-  (set-face-attribute 'default nil :height 105))
-
