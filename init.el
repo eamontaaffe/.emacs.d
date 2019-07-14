@@ -300,3 +300,16 @@
   :init
   (setq olivetti-body-width 80)
   :ensure t)
+
+;; Yaml mode
+
+(use-package yaml-mode
+  :ensure t)
+
+;; Exec path from shell (mac only)
+
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
