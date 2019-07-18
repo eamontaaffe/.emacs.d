@@ -209,7 +209,8 @@
   :init
   (setq whitespace-line-column 80)
   (setq whitespace-style '(face lines-tail trailing))
-  (add-hook 'prog-mode-hook 'whitespace-mode))
+  (add-hook 'prog-mode-hook 'whitespace-mode)
+  :ensure t)
 
 ;; Scala
 
@@ -259,7 +260,8 @@
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
    ("C-x l" . counsel-locate)
-   ("C-S-o" . counsel-rhythmbox))
+   ("C-S-o" . counsel-rhythmbox)
+   ("M-y" . counsel-yank-pop))
   :requires ivy
   :ensure t)
 
@@ -306,6 +308,11 @@
 (use-package yaml-mode
   :ensure t)
 
+;; Digdag
+
+(add-to-list 'auto-mode-alist
+             '("\\.dig\\'" . yaml-mode))
+
 ;; Exec path from shell (mac only)
 
 (use-package exec-path-from-shell
@@ -313,3 +320,4 @@
   :ensure t
   :config
   (exec-path-from-shell-initialize))
+
