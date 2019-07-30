@@ -20,7 +20,7 @@
       nil)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (package-initialize)
 
@@ -174,6 +174,7 @@
 ;; Undo tree
 
 (use-package undo-tree
+  :disabled
   :config
   (global-undo-tree-mode)
   :ensure t)
@@ -181,6 +182,13 @@
 ;; Clojure
 
 (use-package clojure-mode
+  :ensure t)
+
+;; Cider
+
+(use-package cider
+  :disabled
+  :pin melpa-stable
   :ensure t)
 
 ;; Markdown
