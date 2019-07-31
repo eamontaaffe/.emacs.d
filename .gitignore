@@ -1,7 +1,6 @@
 # Ignore everything
 *
 !*/
-elpa/
 
 # Except for files with these names
 !.gitignore
