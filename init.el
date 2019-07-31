@@ -24,6 +24,10 @@
 
 (package-initialize)
 
+;; Add to load path
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/packages"))
+
 ;; Custom file
 
 (setq custom-file "~/.emacs.d/custom.el")
