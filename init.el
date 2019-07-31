@@ -321,3 +321,34 @@
   :config
   (exec-path-from-shell-initialize))
 
+;; Org mode
+
+(use-package org
+  :config
+  (custom-set-variables
+   '(org-export-backends (quote (md gfm))))
+  :ensure t)
+
+(use-package babel
+  :config
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)
+     (sql . t)
+     (ditaa . t)
+     (restclient . t)))
+  :after org
+  :ensure t)
+
+(use-package ox-gfm
+  :after org
+  :ensure t)
+
+;; Artist mode
+
+(eval-after-load "artist"
+  '(define-key artist-mode-map
+     [(down-mouse-3)]
+     'artist-mouse-choose-operation))
+(put 'narrow-to-region 'disabled nil)
