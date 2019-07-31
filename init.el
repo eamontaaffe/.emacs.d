@@ -20,9 +20,13 @@
       nil)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
+
+;; Add to load path
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/packages"))
 
 ;; Custom file
 
@@ -174,6 +178,7 @@
 ;; Undo tree
 
 (use-package undo-tree
+  :disabled
   :config
   (global-undo-tree-mode)
   :ensure t)
@@ -181,6 +186,13 @@
 ;; Clojure
 
 (use-package clojure-mode
+  :ensure t)
+
+;; Cider
+
+(use-package cider
+  :disabled
+  :pin melpa-stable
   :ensure t)
 
 ;; Markdown
@@ -337,7 +349,8 @@
    '((shell . t)
      (sql . t)
      (ditaa . t)
-     (restclient . t)))
+     (restclient . t)
+     (racket . t)))
   :after org
   :ensure t)
 
@@ -351,4 +364,10 @@
   '(define-key artist-mode-map
      [(down-mouse-3)]
      'artist-mouse-choose-operation))
-(put 'narrow-to-region 'disabled nil)
+
+;; Racket
+
+(use-package racket-mode
+  :ensure t)
+
+(require 'ob-racket)

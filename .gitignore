@@ -5,3 +5,4 @@
 # Except for files with these names
 !.gitignore
 !init.el
+!packages/*
