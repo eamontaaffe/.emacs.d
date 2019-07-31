@@ -333,3 +333,17 @@
   :config
   (exec-path-from-shell-initialize))
 
+;; Racket
+
+(use-package racket-mode
+  :ensure t)
+
+(require 'ob-racket)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((racket . t)))
+
+(use-package geiser
+  
+  :ensure t)
