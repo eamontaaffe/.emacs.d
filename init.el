@@ -177,11 +177,10 @@
 
 ;; Undo tree
 
-(use-package undo-tree
-  :disabled
-  :config
-  (global-undo-tree-mode)
-  :ensure t)
+(require 'undo-tree)
+
+(global-undo-tree-mode)
+(setq undo-tree-visualizer-diff t)
 
 ;; Clojure
 
@@ -337,8 +336,8 @@
 
 (use-package org
   :config
-  (custom-set-variables
-   '(org-export-backends (quote (md gfm))))
+  ;; (custom-set-variables
+  ;;  '(org-export-backends (quote (md gfm))))
   :ensure t)
 
 (use-package babel
@@ -354,8 +353,16 @@
   :after org
   :ensure t)
 
-(use-package ox-gfm
-  :after org
+;; (use-package ox-gfm
+;;   :after org
+;;   :ensure t)
+
+;; Rest client
+
+(use-package restclient
+  :ensure t)
+
+(use-package ob-restclient
   :ensure t)
 
 ;; Artist mode
