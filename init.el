@@ -385,3 +385,8 @@
   :ensure t)
 
 (require 'ob-racket)
+
+;; Shell
+
+(setq explicit-shell-file-name
+      "/bin/zsh")
