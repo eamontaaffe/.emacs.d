@@ -352,7 +352,7 @@
 (use-package org
   :config
   (custom-set-variables
-   '(org-export-backends (quote (md gfm))))
+   '(org-export-backends (quote (md gfm beamer))))
   :ensure t)
 
 (use-package babel
