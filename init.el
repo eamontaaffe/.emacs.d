@@ -302,6 +302,14 @@
   (counsel-projectile-mode)
   :ensure t)
 
+;; Beige theme
+
+(use-package spacemacs-theme
+  :defer t
+  :init
+  (load-theme 'spacemacs-light t)
+  :ensure t)
+
 ;; Light theme
 
 (use-package twilight-bright-theme
@@ -311,6 +319,7 @@
 ;; Dark theme
 
 (use-package twilight-anti-bright-theme
+  :disabled
   :ensure t)
 
 ;; Centered window layout
