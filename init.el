@@ -248,6 +248,12 @@
    ("<f6>" . ivy-resume))
   :ensure t)
 
+;; Hydra
+
+(use-package ivy-hydra
+  :requires ivy
+  :ensure t)
+
 ;; Swiper
 
 (use-package swiper
