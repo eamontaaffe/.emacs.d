@@ -158,9 +158,7 @@
 (use-package magit
   :ensure t
   :config
-  (global-set-key (kbd "C-x g") 'magit-status)
-  (setq magit-display-buffer-function
-        #'magit-display-buffer-fullframe-status-v1))
+  (global-set-key (kbd "C-x g") 'magit-status))
 
 (use-package forge
   :after magit
