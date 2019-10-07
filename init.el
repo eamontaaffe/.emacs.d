@@ -153,8 +153,6 @@
 
 ;; Magit
 
-;; Magit
-
 (use-package magit
   :ensure t
   :config
@@ -175,11 +173,11 @@
 
 ;; Undo tree
 
-(use-package undo-tree
-  :disabled
-  :config
-  (global-undo-tree-mode)
-  :ensure t)
+(require 'undo-tree)
+
+(global-undo-tree-mode)
+
+(setq undo-tree-visualizer-diff t)
 
 ;; Clojure
 
@@ -369,8 +367,16 @@
   :after org
   :ensure t)
 
-(use-package ox-gfm
-  :after org
+;; (use-package ox-gfm
+;;   :after org
+;;   :ensure t)
+
+;; Rest client
+
+(use-package restclient
+  :ensure t)
+
+(use-package ob-restclient
   :ensure t)
 
 ;; Artist mode
@@ -386,9 +392,6 @@
   :ensure t)
 
 (require 'ob-racket)
-(put 'narrow-to-region 'disabled nil)
-
-(put 'downcase-region 'disabled nil)
 
 ;; Move lines
 
@@ -399,3 +402,8 @@
 ;; - Move lines down (M-n or M-<down>)
 
 (move-lines-binding)
+
+;; Shell
+
+(setq explicit-shell-file-name
+      "/bin/zsh")
