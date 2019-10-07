@@ -350,7 +350,8 @@
      (sql . t)
      (ditaa . t)
      (restclient . t)
-     (racket . t)))
+     (racket . t)
+     (dot . t)))
   :after org
   :ensure t)
 
