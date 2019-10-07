@@ -371,3 +371,16 @@
   :ensure t)
 
 (require 'ob-racket)
+(put 'narrow-to-region 'disabled nil)
+
+(put 'downcase-region 'disabled nil)
+
+;; Move lines
+
+(require 'move-lines)
+
+;; Binds to:
+;; - Move lines up (M-p or M-<up>)
+;; - Move lines down (M-n or M-<down>)
+
+(move-lines-binding)
