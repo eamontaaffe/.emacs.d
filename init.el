@@ -356,8 +356,14 @@
      (sql . t)
      (ditaa . t)
      (restclient . t)
-     (racket . t)))
+     (racket . t)
+     (dot . t)))
   :after org
+  :ensure t)
+
+;; Dot mode
+
+(use-package graphviz-dot-mode
   :ensure t)
 
 ;; (use-package ox-gfm
