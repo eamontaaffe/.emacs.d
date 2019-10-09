@@ -390,3 +390,7 @@
 
 (setq explicit-shell-file-name
       "/bin/zsh")
+
+;; Javascript (JSON)
+
+(setq js-indent-level 2)
