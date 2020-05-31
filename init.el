@@ -342,9 +342,6 @@
 ;; Org mode
 
 (use-package org
-  :config
-  ;; (custom-set-variables
-  ;;  '(org-export-backends (quote (md gfm))))
   :ensure t)
 
 (use-package babel
@@ -357,7 +354,8 @@
      (ditaa . t)
      (restclient . t)
      (racket . t)
-     (dot . t)))
+     (dot . t)
+     (clojure .t)))
   :after org
   :ensure t)
 
@@ -400,3 +398,11 @@
 ;; Javascript (JSON)
 
 (setq js-indent-level 2)
+;; Clojure
+
+(require 'ob-clojure)
+
+(setq org-babel-clojure-backend 'cider)
+
+(use-package cider
+  :ensure t)
