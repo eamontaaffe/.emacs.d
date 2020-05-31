@@ -398,6 +398,17 @@
 ;; Javascript (JSON)
 
 (setq js-indent-level 2)
+
+;; Haskell
+
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :init
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  (add-hook 'haskell-mode-hook 'dante-mode))
+
 ;; Clojure
 
 (require 'ob-clojure)
