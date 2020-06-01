@@ -338,6 +338,28 @@
   :config
   (custom-set-variables
    '(org-export-backends (quote (md gfm beamer))))
+
+  ;; Organise some directories
+  (setq org-directory "~/org")
+  (setq org-agenda-files (list (concat org-directory "/notes.org")))
+
+  ;; Record the finish timestamp of tasks
+  (setq org-log-done 'time)
+
+  ;; Align tags immediately after title
+  (setq org-tags-column 0)
+
+  ;; Setup the org task states
+  (setq org-todo-keywords
+        '((sequence "TODO" "|" "DONE" "CANCELLED")))
+
+  ;; Setup capture
+  (setq org-default-notes-file
+        (concat org-directory "/refile.org"))
+
+  :bind
+  (("C-c a" . org-agenda)
+   ("C-c c" . org-capture))
   :ensure t)
 
 (use-package babel
