@@ -416,3 +416,11 @@
 
 (setq explicit-shell-file-name
       "/bin/zsh")
+
+;; Typescript
+
+(use-package typescript-mode
+  :custom
+  (typescript-indent-level 2)
+  :ensure t)
+
