@@ -213,19 +213,9 @@
 
 ;; 80 column rule
 
-(use-package whitespace
-  :init
-  (setq whitespace-line-column 80)
-  (setq whitespace-style '(face lines-tail trailing))
-  (add-hook 'prog-mode-hook 'whitespace-mode)
-  :ensure t)
-
-;; Scala
-
-(use-package ensime
-  :init
-  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-  (setq ensime-startup-notification nil)
+(use-package column-enforce-mode
+  :config
+  (global-column-enforce-mode t)
   :ensure t)
 
 ;; Term paste
