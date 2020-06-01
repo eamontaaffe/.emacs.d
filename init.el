@@ -424,3 +424,9 @@
   (typescript-indent-level 2)
   :ensure t)
 
+;; Added by emacs
+
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
