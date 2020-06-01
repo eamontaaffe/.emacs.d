@@ -231,9 +231,6 @@
   (setq enable-recursive-minibuffers t)
   :config
   (ivy-mode 1)
-  :bind
-  (("C-c C-r" . ivy-resume)
-   ("<f6>" . ivy-resume))
   :ensure t)
 
 ;; Hydra
