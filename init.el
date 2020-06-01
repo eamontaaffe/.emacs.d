@@ -376,6 +376,11 @@
   :after org
   :ensure t)
 
+;; Dot mode
+
+(use-package graphviz-dot-mode
+  :ensure t)
+
 ;; (use-package ox-gfm
 ;;   :after org
 ;;   :ensure t)
@@ -422,6 +427,29 @@
 (use-package typescript-mode
   :custom
   (typescript-indent-level 2)
+  :ensure t)
+
+;; Javascript (JSON)
+
+(setq js-indent-level 2)
+
+;; Haskell
+
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :init
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  (add-hook 'haskell-mode-hook 'dante-mode))
+
+;; Clojure
+
+(require 'ob-clojure)
+
+(setq org-babel-clojure-backend 'cider)
+
+(use-package cider
   :ensure t)
 
 ;; Added by emacs
