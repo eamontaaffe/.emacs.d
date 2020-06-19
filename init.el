@@ -52,10 +52,6 @@
 
 (setq echo-keystrokes 0.1)
 
-;; Show keystrokes in progress
-
-(setq echo-keystrokes 0.1)
-
 ;; Answering just 'y' or 'n' will do
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -158,10 +154,6 @@
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
 
-(use-package forge
-  :after magit
-  :ensure t)
-
 ;; Multiple cursors
 
 (use-package multiple-cursors
@@ -196,14 +188,6 @@
 (use-package markdown-mode
   :ensure t)
 
-;; Visualise Git Diffs
-
-(use-package diff-hl
-  :config
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  (global-diff-hl-mode)
-  :ensure t)
-
 ;; Highlight Indentation
 
 (use-package highlight-indentation
@@ -223,50 +207,6 @@
 (eval-after-load "term"
   '(define-key term-raw-map (kbd "C-c C-y") 'term-paste))
 
-;; Ivy
-
-(use-package ivy
-  :init
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  :config
-  (ivy-mode 1)
-  :ensure t)
-
-;; Hydra
-
-(use-package ivy-hydra
-  :requires ivy
-  :ensure t)
-
-;; Swiper
-
-(use-package swiper
-  :bind
-  (("\C-s" . swiper))
-  :requires ivy
-  :ensure t)
-
-;; Counsel
-
-(use-package counsel
-  :bind
-  (("M-x" . counsel-M-x)
-   ("C-x C-f" . counsel-find-file)
-   ("<f1> f" . counsel-describe-function)
-   ("<f1> v" . counsel-describe-variable)
-   ("<f1> l" . counsel-find-library)
-   ("<f2> i" . counsel-info-lookup-symbol)
-   ("<f2> u" . counsel-unicode-char)
-   ("C-c g" . counsel-git)
-   ("C-c j" . counsel-git-grep)
-   ("C-c k" . counsel-ag)
-   ("C-x l" . counsel-locate)
-   ("C-S-o" . counsel-rhythmbox)
-   ("M-y" . counsel-yank-pop))
-  :requires ivy
-  :ensure t)
-
 ;; Projectile
 
 (use-package projectile
@@ -280,16 +220,10 @@
   (("C-c p p" . projectile-switch-project))
   :ensure t)
 
-;; Counsel projectile extension
-
-(use-package counsel-projectile
-  :config
-  (counsel-projectile-mode)
-  :ensure t)
-
 ;; Beige theme
 
 (use-package spacemacs-theme
+  :disabled
   :defer t
   :init
   (load-theme 'spacemacs-light t)
@@ -307,22 +241,10 @@
   :disabled
   :ensure t)
 
-;; Centered window layout
-
-(use-package olivetti
-  :init
-  (setq olivetti-body-width 80)
-  :ensure t)
-
 ;; Yaml mode
 
 (use-package yaml-mode
   :ensure t)
-
-;; Digdag
-
-(add-to-list 'auto-mode-alist
-             '("\\.dig\\'" . yaml-mode))
 
 ;; Exec path from shell (mac only)
 
@@ -375,37 +297,6 @@
      (dot . t)))
   :after org
   :ensure t)
-
-;; Dot mode
-
-(use-package graphviz-dot-mode
-  :ensure t)
-
-;; (use-package ox-gfm
-;;   :after org
-;;   :ensure t)
-
-;; Rest client
-
-(use-package restclient
-  :ensure t)
-
-(use-package ob-restclient
-  :ensure t)
-
-;; Artist mode
-
-(eval-after-load "artist"
-  '(define-key artist-mode-map
-     [(down-mouse-3)]
-     'artist-mouse-choose-operation))
-
-;; Racket
-
-(use-package racket-mode
-  :ensure t)
-
-(require 'ob-racket)
 
 ;; Move lines
 
