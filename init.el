@@ -56,14 +56,6 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Lines should be 80 characters wide, not 72
-
-(setq fill-column 80)
-
-;; 80 chars is a good width.
-
-(set-default 'fill-column 80)
-
 ;; Spaces instead of tabs
 
 (setq-default indent-tabs-mode nil)
@@ -298,7 +290,6 @@
      (sql . t)
      (ditaa . t)
      (restclient . t)
-     (racket . t)
      (dot . t)))
   :after org
   :ensure t)
