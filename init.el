@@ -112,6 +112,11 @@
 (if (string-equal system-type "darwin")
     (font-large))
 
+;; IDO - Interactively Do Things (kinda like ivy or helm)
+
+(require 'ido)
+(ido-mode t)
+
 ;; Crux (mostly for to replace smarter beginning of line)
 
 (use-package crux
