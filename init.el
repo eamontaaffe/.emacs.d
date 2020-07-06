@@ -153,14 +153,14 @@
 
 ;; Magit
 
-(use-package magit
-  :ensure t
-  :config
-  (global-set-key (kbd "C-x g") 'magit-status))
+;; (use-package magit
+;;   :ensure t
+;;   :config
+;;   (global-set-key (kbd "C-x g") 'magit-status))
 
-(use-package forge
-  :after magit
-  :ensure t)
+;; (use-package forge
+;;   :after magit
+;;   :ensure t)
 
 ;; Multiple cursors
 
@@ -450,6 +450,20 @@
 (setq org-babel-clojure-backend 'cider)
 
 (use-package cider
+  :ensure t)
+
+;; RSS Feeds
+
+(setq browse-url-browser-function 'eww-browse-url)
+
+(use-package elfeed
+  :config
+  (setq
+   elfeed-feeds
+   '("https://news.ycombinator.com/rss"
+     "reddit.com/r/worldnews/.rss"))
+  :bind
+  (("C-x w" . elfeed))
   :ensure t)
 
 ;; Added by emacs
