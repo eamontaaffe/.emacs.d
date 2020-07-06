@@ -146,14 +146,14 @@
 
 ;; Magit
 
-;; (use-package magit
-;;   :ensure t
-;;   :config
-;;   (global-set-key (kbd "C-x g") 'magit-status))
+(use-package magit
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x g") 'magit-status))
 
-;; (use-package forge
-;;   :after magit
-;;   :ensure t)
+(use-package forge
+  :after magit
+  :ensure t)
 
 ;; Multiple cursors
 
@@ -211,8 +211,6 @@
 ;; Projectile
 
 (use-package projectile
-  :init
-  (setq projectile-completion-system 'ivy)
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
