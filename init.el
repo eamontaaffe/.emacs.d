@@ -176,8 +176,8 @@
 ;; Cider
 
 (use-package cider
-  :disabled
-  :pin melpa-stable
+  :config
+  (setq cider-clojure-cli-global-options "-A:dev")
   :ensure t)
 
 ;; Markdown
