@@ -314,6 +314,8 @@
 (use-package typescript-mode
   :custom
   (typescript-indent-level 2)
+  :init
+  (add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
   :ensure t)
 
 ;; Javascript (JSON)
