@@ -339,6 +339,15 @@
 (use-package cider
   :ensure t)
 
+
+;; Python
+
+(use-package elpy
+  :init
+  (elpy-enable)
+  (setq python-indent-offset 4)
+  :ensure t)
+
 ;; Added by emacs
 
 (put 'downcase-region 'disabled nil)
