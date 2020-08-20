@@ -147,6 +147,8 @@
 ;; Magit
 
 (use-package magit
+  :init
+  (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
   :ensure t
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
