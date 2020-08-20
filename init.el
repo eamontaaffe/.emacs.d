@@ -212,7 +212,11 @@
 
 ;; Projectile
 
+(use-package ag
+  :ensure t)
+
 (use-package projectile
+  :requires ag
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
