@@ -361,6 +361,11 @@
   (("C-x w" . elfeed))
   :ensure t)
 
+;; Elixir
+
+(use-package elixir-mode
+  :ensure t)
+
 ;; Added by emacs
 
 (put 'downcase-region 'disabled nil)
