@@ -6,11 +6,12 @@
 
 (defvar default-window-height 40)
 
+(if (display-graphic-p)
+    (progn
+      (toggle-scroll-bar -1)
+      (tool-bar-mode -1)))
+
 (menu-bar-mode -1)
-
-(toggle-scroll-bar -1)
-
-(tool-bar-mode -1)
 
 ;; Package
 
@@ -182,8 +183,8 @@
 ;; Cider
 
 (use-package cider
-  :disabled
-  :pin melpa-stable
+  :config
+  (setq cider-clojure-cli-global-options "-A:dev")
   :ensure t)
 
 ;; Markdown
@@ -322,6 +323,8 @@
 (use-package typescript-mode
   :custom
   (typescript-indent-level 2)
+  :init
+  (add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
   :ensure t)
 
 ;; Javascript (JSON)
@@ -347,23 +350,17 @@
 (use-package cider
   :ensure t)
 
-;; RSS Feeds
-
-(setq browse-url-browser-function 'eww-browse-url)
-
-(use-package elfeed
-  :config
-  (setq
-   elfeed-feeds
-   '("https://news.ycombinator.com/rss"
-     "reddit.com/r/worldnews/.rss"))
-  :bind
-  (("C-x w" . elfeed))
-  :ensure t)
-
 ;; Elixir
 
 (use-package elixir-mode
+  :ensure t)
+
+;; Python
+
+(use-package elpy
+  :init
+  (elpy-enable)
+  (setq python-indent-offset 4)
   :ensure t)
 
 ;; Added by emacs
