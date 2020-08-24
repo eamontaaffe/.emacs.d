@@ -105,10 +105,16 @@
 (if (string-equal system-type "darwin")
     (font-large))
 
-;; IDO - Interactively Do Things (kinda like ivy or helm)
+;; Helm
 
-(require 'ido)
-(ido-mode t)
+(use-package helm
+  :bind
+  ("M-x" . helm-M-x)
+  ("C-x C-f". helm-find-files)
+  ("M-y" . helm-show-kill-ring)
+  :config
+  (helm-mode 1)
+  :ensure t)
 
 ;; Crux (mostly for to replace smarter beginning of line)
 
@@ -354,6 +360,13 @@
 
 (use-package elixir-mode
   :ensure t)
+
+;; Paredit
+
+;; (use-package paredit
+;;   :config
+;;   (add-hook 'clojure-mode-hook #'paredit-mode)
+;;   :ensure t)
 
 ;; Python
 
