@@ -315,13 +315,13 @@
 
 ;; Move lines
 
-(require 'move-lines)
+;; (require 'move-lines)
 
 ;; Binds to:
 ;; - Move lines up (M-p or M-<up>)
 ;; - Move lines down (M-n or M-<down>)
 
-(move-lines-binding)
+;; (move-lines-binding)
 
 ;; Shell
 
