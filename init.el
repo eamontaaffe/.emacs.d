@@ -13,6 +13,8 @@
 
 (menu-bar-mode -1)
 
+(setq default-directory "~/")
+
 ;; Package
 
 (require 'package)
@@ -21,7 +23,7 @@
       nil)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
+	     '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
 
@@ -36,7 +38,7 @@
 (if (file-exists-p custom-file)
     (load custom-file))
 
-;; Bootstrap `use-package
+;; Bootstrap use-package
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -227,6 +229,8 @@
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p x t") 'projectile-run-term)
+  (define-key projectile-mode-map (kbd "C-c p x e") 'projectile-run-eshell)
   (projectile-mode +1)
   :bind
   (("C-c p p" . projectile-switch-project))
