@@ -308,7 +308,6 @@
    '((shell . t)
      (sql . t)
      (ditaa . t)
-     (restclient . t)
      (dot . t)))
   :after org
   :ensure t)
