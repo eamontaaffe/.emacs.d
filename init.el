@@ -328,14 +328,47 @@
 (setq explicit-shell-file-name
       "/bin/zsh")
 
+;; Flycheck
+
+(use-package flycheck
+  :ensure t)
+
 ;; Typescript
 
-(use-package typescript-mode
-  :custom
-  (typescript-indent-level 2)
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(use-package web-mode
   :init
-  (add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  :config
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+  (flycheck-add-mode 'typescript-tslint 'web-mode)
   :ensure t)
+
+(use-package tide
+  :ensure t
+  :init
+  (setq tide-format-options '(:indentSize 2 :tabSize 2))
+  :after
+  (typescript-mode company flycheck)
+  :config
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  :hook
+  ((web-mode . tide-setup)
+   (web-mode . tide-hl-identifier-mode)))
 
 ;; Javascript (JSON)
 
@@ -378,6 +411,15 @@
   :init
   (elpy-enable)
   (setq python-indent-offset 4)
+  :ensure t)
+
+;; Company (code completion)
+
+(use-package company
+  :init
+  (global-company-mode)
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'company-mode)
   :ensure t)
 
 ;; Added by emacs
