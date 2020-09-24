@@ -419,6 +419,15 @@
   (global-set-key (kbd "M-y") 'browse-kill-ring)
   :ensure t)
 
+;; Dired
+
+(defun dired-mode-setup ()
+  "To be run as hook for `dired-mode'. Displays simplified file view
+   by default."
+  (dired-hide-details-mode 1))
+
+(add-hook 'dired-mode-hook 'dired-mode-setup)
+
 ;; Added by emacs
 
 (put 'downcase-region 'disabled nil)
