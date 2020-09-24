@@ -107,16 +107,10 @@
 (if (string-equal system-type "darwin")
     (font-large))
 
-;; Helm
+;; IDO - Interactively Do Things (kinda like ivy or helm)
 
-(use-package helm
-  :bind
-  ("M-x" . helm-M-x)
-  ("C-x C-f". helm-find-files)
-  ("M-y" . helm-show-kill-ring)
-  :config
-  (helm-mode 1)
-  :ensure t)
+(require 'ido)
+(ido-mode t)
 
 ;; Crux (mostly for to replace smarter beginning of line)
 
@@ -226,14 +220,11 @@
 
 (use-package projectile
   :requires ag
+  :init
+  (setq projectile-completion-system 'ido)
   :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p x t") 'projectile-run-term)
-  (define-key projectile-mode-map (kbd "C-c p x e") 'projectile-run-eshell)
   (projectile-mode +1)
-  :bind
-  (("C-c p p" . projectile-switch-project))
   :ensure t)
 
 ;; Beige theme
@@ -419,6 +410,13 @@
   (global-company-mode)
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode)
+  :ensure t)
+
+;; Browse Kill Ring
+
+(use-package browse-kill-ring
+  :config
+  (global-set-key (kbd "M-y") 'browse-kill-ring)
   :ensure t)
 
 ;; Added by emacs
