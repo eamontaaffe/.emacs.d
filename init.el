@@ -180,14 +180,36 @@
 ;; Clojure
 
 (use-package clojure-mode
+  :config
+  (define-clojure-indent
+    (defroutes 'defun)
+    (GET 2)
+    (POST 2)
+    (PUT 2)
+    (DELETE 2)
+    (HEAD 2)
+    (ANY 2)
+    (OPTIONS 2)
+    (PATCH 2)
+    (rfn 2)
+    (let-routes 1)
+    (context 2))
   :ensure t)
 
 ;; Cider
 
 (use-package cider
   :config
-  (setq cider-clojure-cli-global-options "-A:dev")
+  (setq nrepl-use-ssh-fallback-for-remote-hosts t)
   :ensure t)
+
+
+;; Parinfer
+
+(use-package parinfer-rust-mode
+    :hook clojure-mode
+    :init
+    (setq parinfer-rust-auto-download t))
 
 ;; Markdown
 
@@ -204,6 +226,7 @@
 ;; 80 column rule
 
 (use-package column-enforce-mode
+  :disabled
   :config
   (global-column-enforce-mode t)
   :ensure t)
@@ -230,7 +253,6 @@
 ;; Beige theme
 
 (use-package spacemacs-theme
-  :disabled
   :defer t
   :init
   (load-theme 'spacemacs-light t)
@@ -246,6 +268,9 @@
 
 (use-package twilight-anti-bright-theme
   :disabled
+  :defer t
+  :init
+  (load-theme 'twilight-anti-bright t)
   :ensure t)
 
 ;; Yaml mode
@@ -285,6 +310,9 @@
   ;; Setup capture
   (setq org-default-notes-file
         (concat org-directory "/refile.org"))
+
+  ;; Indent mode
+  (add-hook 'org-mode-hook 'org-indent-mode)
 
   :bind
   (("C-c a" . org-agenda)
@@ -336,9 +364,9 @@
 
 (use-package web-mode
   :init
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-markup-indent-offset 4)
+  (setq web-mode-code-indent-offset 4)
+  (setq web-mode-css-indent-offset 4)
   :config
   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . web-mode))
   (add-hook 'web-mode-hook
@@ -351,7 +379,7 @@
 (use-package tide
   :ensure t
   :init
-  (setq tide-format-options '(:indentSize 2 :tabSize 2))
+  (setq tide-format-options '(:indentsize 4 :tabsize 4))
   :after
   (typescript-mode company flycheck)
   :config
@@ -362,7 +390,7 @@
 
 ;; Javascript (JSON)
 
-(setq js-indent-level 2)
+(setq js-indent-level 4)
 
 ;; Haskell
 
@@ -393,6 +421,7 @@
 ;; (use-package paredit
 ;;   :config
 ;;   (add-hook 'clojure-mode-hook #'paredit-mode)
+;;   (add-hook 'racket-mode-hook #'paredit-mode)
 ;;   :ensure t)
 
 ;; Python
@@ -428,9 +457,60 @@
 
 (add-hook 'dired-mode-hook 'dired-mode-setup)
 
+;; Docker
+
+(use-package dockerfile-mode
+  :ensure t)
+
+;; Go
+
+(use-package go-mode
+  :ensure t)
+
+(use-package go-scratch
+  :ensure t)
+
+;; String inflection
+
+(use-package string-inflection
+  :bind
+  (("C-c C-q C-j" . string-inflection-lower-camelcase))
+  :ensure t)
+
+;; Common Lisp
+
+(use-package slime
+  :init
+  (setq inferior-lisp-program "sbcl")
+  :ensure t)
+
+;; Plant UML
+
+(use-package plantuml-mode
+  :init
+  (setq plantuml-executable-path "/opt/local/bin/plantuml")
+  (setq plantuml-default-exec-mode 'executable)
+  :ensure t)
+
+;; Racket
+
+;; (use-package racket-mode
+;;   :init
+;;   (setq racket-program "/Applications/Racket v8.0/bin/racket")
+;;   :ensure t)
+
+(use-package geiser-racket
+  :init
+  (setq geiser-active-implementations '(racket))
+  :ensure t)
+
+;; Fill region
+
+(global-set-key (kbd "C-c C-f") 'fill-region)
+
 ;; Added by emacs
 
-(put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(put 'downcase-region 'disabled nil)
