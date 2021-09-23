@@ -508,6 +508,12 @@
 
 (global-set-key (kbd "C-c C-f") 'fill-region)
 
+;; Colourful Dired Mode
+
+(use-package diredfl
+  :commands diredfl-global-mode
+  :hook (dired-mode . diredfl-mode))
+
 ;; Added by emacs
 
 (put 'upcase-region 'disabled nil)
