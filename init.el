@@ -94,23 +94,29 @@
   (interactive)
   (set-face-attribute 'default nil :height 150))
 
-(defun font-medium ()
-  (interactive)
-  (set-face-attribute 'default nil :height 120))
-
-(defun font-small ()
-  (interactive)
-  (set-face-attribute 'default nil :height 105))
-
 ;; Mac setup
 
 (if (string-equal system-type "darwin")
     (font-large))
 
-;; IDO - Interactively Do Things (kinda like ivy or helm)
+;; Counsel
 
-(require 'ido)
-(ido-mode t)
+(use-package counsel
+  :config (counsel-mode)
+  :ensure t)
+
+(use-package ivy
+  :after counsel
+  :init
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  :bind (("C-c C-r" . ivy-resume))
+  :config (ivy-mode 1))
+
+(use-package swiper
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
 
 ;; Crux (mostly for to replace smarter beginning of line)
 
@@ -241,6 +247,10 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1)
   :ensure t)
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode)
+  :ensure t) ;; Hello
 
 ;; Beige theme
 
