@@ -203,14 +203,6 @@
   (setq nrepl-use-ssh-fallback-for-remote-hosts t)
   :ensure t)
 
-
-;; Parinfer
-
-(use-package parinfer-rust-mode
-    :hook clojure-mode
-    :init
-    (setq parinfer-rust-auto-download t))
-
 ;; Markdown
 
 (use-package markdown-mode
@@ -418,11 +410,12 @@
 
 ;; Paredit
 
-;; (use-package paredit
-;;   :config
-;;   (add-hook 'clojure-mode-hook #'paredit-mode)
-;;   (add-hook 'racket-mode-hook #'paredit-mode)
-;;   :ensure t)
+(use-package paredit
+  :config
+  (add-hook 'clojure-mode-hook #'paredit-mode)
+  (add-hook 'racket-mode-hook #'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  :ensure t)
 
 ;; Python
 
