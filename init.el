@@ -508,6 +508,14 @@
 
 (global-set-key (kbd "C-c C-f") 'fill-region)
 
+;; Rust
+
+(use-package rust-mode
+  :bind
+  (("C-c C-c" . rust-compile)
+   ("C-c C-t" . rust-test))
+  :ensure t)
+
 ;; Added by emacs
 
 (put 'upcase-region 'disabled nil)
