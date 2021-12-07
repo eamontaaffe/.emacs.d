@@ -490,6 +490,14 @@
   :commands diredfl-global-mode
   :hook (dired-mode . diredfl-mode))
 
+;; SQL
+
+(setq sql-postgres-login-params
+      '((user :default "postgres")
+        (database :default "postgres")
+        (server :default "localhost")
+        (port :default 5432)))
+
 ;; Added by emacs
 
 (put 'upcase-region 'disabled nil)
