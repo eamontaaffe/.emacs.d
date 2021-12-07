@@ -314,6 +314,12 @@
   ;; Indent mode
   (add-hook 'org-mode-hook 'org-indent-mode)
 
+  ;; Auto fill mode
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+
+  ;; Don't format durations with day
+  (setq org-duration-format 'h:mm)
+
   :bind
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture))
