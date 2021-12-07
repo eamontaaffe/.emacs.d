@@ -94,23 +94,29 @@
   (interactive)
   (set-face-attribute 'default nil :height 150))
 
-(defun font-medium ()
-  (interactive)
-  (set-face-attribute 'default nil :height 120))
-
-(defun font-small ()
-  (interactive)
-  (set-face-attribute 'default nil :height 105))
-
 ;; Mac setup
 
 (if (string-equal system-type "darwin")
     (font-large))
 
-;; IDO - Interactively Do Things (kinda like ivy or helm)
+;; Counsel
 
-(require 'ido)
-(ido-mode t)
+(use-package counsel
+  :config (counsel-mode)
+  :ensure t)
+
+(use-package ivy
+  :after counsel
+  :init
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  :bind (("C-c C-r" . ivy-resume))
+  :config (ivy-mode 1))
+
+(use-package swiper
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
 
 ;; Crux (mostly for to replace smarter beginning of line)
 
@@ -203,14 +209,6 @@
   (setq nrepl-use-ssh-fallback-for-remote-hosts t)
   :ensure t)
 
-
-;; Parinfer
-
-(use-package parinfer-rust-mode
-    :hook clojure-mode
-    :init
-    (setq parinfer-rust-auto-download t))
-
 ;; Markdown
 
 (use-package markdown-mode
@@ -249,6 +247,10 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1)
   :ensure t)
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode)
+  :ensure t) ;; Hello
 
 ;; Beige theme
 
@@ -394,11 +396,12 @@
 
 ;; Paredit
 
-;; (use-package paredit
-;;   :config
-;;   (add-hook 'clojure-mode-hook #'paredit-mode)
-;;   (add-hook 'racket-mode-hook #'paredit-mode)
-;;   :ensure t)
+(use-package paredit
+  :config
+  (add-hook 'clojure-mode-hook #'paredit-mode)
+  (add-hook 'racket-mode-hook #'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  :ensure t)
 
 ;; Python
 
@@ -497,6 +500,14 @@
         (database :default "postgres")
         (server :default "localhost")
         (port :default 5432)))
+
+;; Rust
+
+(use-package rust-mode
+  :bind
+  (("C-c C-c" . rust-compile)
+   ("C-c C-t" . rust-test))
+  :ensure t)
 
 ;; Added by emacs
 
