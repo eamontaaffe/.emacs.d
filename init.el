@@ -225,13 +225,6 @@
   (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode)
   :ensure t)
 
-;; 80 column rule
-
-(use-package column-enforce-mode
-  :disabled
-  :config
-  (global-column-enforce-mode t)
-  :ensure t)
 
 ;; Term paste
 
