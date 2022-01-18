@@ -47,6 +47,10 @@
 (eval-when-compile
   (require 'use-package))
 
+;; Show column number in the mode line
+
+(setq column-number-mode t)
+
 ;; Allow pasting from system clipboard
 
 (setq x-select-enable-clipboard t)
