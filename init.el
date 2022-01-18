@@ -514,7 +514,25 @@
   :bind
   (("C-c C-c" . rust-compile)
    ("C-c C-t" . rust-test))
+  :hook ((rust-mode . display-fill-column-indicator-mode))
+  :init
+  (setq fill-column 80)
   :ensure t)
+
+;; Language Server
+
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-rust-server "rls")
+  :hook ((rust-mode . lsp))
+  :commands lsp
+  :ensure t)
+
+(use-package lsp-ivy
+  :commands lsp-ivy-workspace-symbol
+  :ensure t)
+
 
 ;; Added by emacs
 
