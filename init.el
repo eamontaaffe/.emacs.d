@@ -118,6 +118,13 @@
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
 
+;; Avy: jump to things
+
+(use-package avy
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2))
+  :ensure t)
+
 ;; Crux (mostly for to replace smarter beginning of line)
 
 (use-package crux
@@ -136,10 +143,14 @@
 
 ;; Backups
 
-(setq backup-directory-alist
-      '(("." . "~/.emacs.d/backups")))
-
-(setq delete-old-versions -1)
+(setq
+ backup-by-copying t
+ backup-directory-alist
+ '(("." . "~/.emacs.d.backups/"))
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)
 
 ;; Turn off bell
 
@@ -327,6 +338,9 @@
    ("C-c c" . org-capture))
   :ensure t)
 
+(use-package ob-http
+  :ensure t)
+
 (use-package babel
   :config
   (add-hook 'org-mode-hook 'visual-line-mode)
@@ -335,8 +349,9 @@
    '((shell . t)
      (sql . t)
      (ditaa . t)
-     (dot . t)))
-  :after org
+     (dot . t)
+     (http . t)))
+  :after org ob-http ob-json
   :ensure t)
 
 ;; Move lines
@@ -405,11 +420,15 @@
 
 ;; Python
 
-(use-package elpy
-  :init
-  (elpy-enable)
-  (setq python-indent-offset 4)
-  :ensure t)
+;; (use-package elpy
+;;   :init
+;;   (elpy-enable)
+;;   (setq python-indent-offset 4)
+;;   :ensure t)
+
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args "-i")
 
 ;; Company (code completion)
 
