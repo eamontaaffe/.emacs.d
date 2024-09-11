@@ -15,6 +15,14 @@
 
 (setq default-directory "~/")
 
+;; MacOS switch meta key
+;;
+;; This is specifically for the railwaycat distribution of emacs. There's more
+;; info here: https://gist.github.com/railwaycat/3498096
+
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'hyper)
+
 ;; Disable warning for cl package
 
 (setq byte-compile-warnings '(cl-functions))
@@ -30,6 +38,24 @@
 	     '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
+
+;; Straight.el
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;; Add to load path
 
@@ -189,9 +215,9 @@
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
 
-(use-package forge
-  :after magit
-  :ensure t)
+;; (use-package forge
+;;   :after magit
+;;   :ensure t)
 
 ;; Multiple cursors
 
@@ -244,6 +270,9 @@
 ;; Highlight Indentation
 
 (use-package highlight-indentation
+  :init
+  (setq yaml-block-literal-electric-alist nil)
+  (setq yaml-indent-offset 2)
   :config
   (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode)
   :ensure t)
@@ -309,6 +338,7 @@
   :if (memq window-system '(mac ns))
   :ensure t
   :config
+  (setq exec-path-from-shell-arguments nil)
   (exec-path-from-shell-initialize))
 
 ;; Org mode
@@ -427,12 +457,12 @@
 
 ;; Paredit
 
-(use-package paredit
-  :config
-  (add-hook 'clojure-mode-hook #'paredit-mode)
-  (add-hook 'racket-mode-hook #'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  :ensure t)
+;; (use-package paredit
+;;   :config
+;;   (add-hook 'clojure-mode-hook #'paredit-mode)
+;;   (add-hook 'racket-mode-hook #'paredit-mode)
+;;   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+;;   :ensure t)
 
 ;; Python
 
@@ -569,11 +599,32 @@
   :commands lsp-ivy-workspace-symbol
   :ensure t)
 
+;; Copilot
+
+(use-package copilot
+  :hook ((prog-mode-hook . copilot-mode))
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :bind (("C-c x l" . copilot-accept-completion-by-line)
+         ("C-c x w" . copilot-accept-completion-by-word)
+         ("C-c x a" . copilot-accept-completion))
+  :init
+  (add-to-list 'copilot-major-mode-alist '("python" . "python"))
+  (add-to-list 'copilot-major-mode-alist '("yaml" . "yaml"))
+  :ensure t)
+
 ;; Evil Mode (Vim mode)
 
 ;; (use-package evil
 ;;   :config
 ;;   (evil-mode 1)
+;;   :ensure t)
+
+;; (use-package key-chord
+;;   :init
+;;   (setq key-chord-two-keys-delay 1)
+;;   :config
+;;   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+;;   (key-chord-mode 1)
 ;;   :ensure t)
 
 ;; Added by emacs
