@@ -15,6 +15,10 @@
 
 (setq default-directory "~/")
 
+;; Disable warning for cl package
+
+(setq byte-compile-warnings '(cl-functions))
+
 ;; Package
 
 (require 'package)
@@ -71,6 +75,12 @@
 
 (setq-default tab-width 2)
 
+;; Fill column default
+
+(setq-default fill-column 80)
+
+(set-face-attribute 'fill-column-indicator nil :foreground "grey90")
+
 ;; Remove text in active region if inserting text
 
 (delete-selection-mode 1)
@@ -97,6 +107,8 @@
 (defun font-large ()
   (interactive)
   (set-face-attribute 'default nil :height 150))
+
+(global-set-key (kbd "C-x C-y") 'capitalize-region)
 
 ;; Mac setup
 
@@ -286,6 +298,9 @@
 ;; Yaml mode
 
 (use-package yaml-mode
+  :hook ((yaml-mode . display-fill-column-indicator-mode))
+  :init
+  (setq fill-column 80)
   :ensure t)
 
 ;; Exec path from shell (mac only)
@@ -304,8 +319,8 @@
    '(org-export-backends (quote (md gfm beamer))))
 
   ;; Organise some directories
-  (setq org-directory "~/org")
-  (setq org-agenda-files (list (concat org-directory "/notes.org")))
+  (setq org-directory "~/.org")
+  (setq org-agenda-files (list (concat org-directory "/refile.org")))
 
   ;; Record the finish timestamp of tasks
   (setq org-log-done 'time)
@@ -347,7 +362,8 @@
      (sql . t)
      (ditaa . t)
      (dot . t)
-     (http . t)))
+     (http . t)
+     (js . t)))
   :after org ob-http ob-json
   :ensure t)
 
@@ -376,6 +392,9 @@
 (use-package typescript-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
+  :hook ((typescript-mode . display-fill-column-indicator-mode))
+  :init
+  (setq fill-column 80)
   :ensure t)
 
 ;; Javascript (JSON)
@@ -426,6 +445,8 @@
 (setq
  python-shell-interpreter "ipython"
  python-shell-interpreter-args "-i")
+
+(add-hook 'python-mode-hook #'display-fill-column-indicator-mode)
 
 ;; Company (code completion)
 
@@ -483,8 +504,8 @@
 
 (use-package plantuml-mode
   :init
-  (setq plantuml-executable-path "/opt/local/bin/plantuml")
-  (setq plantuml-default-exec-mode 'executable)
+  (setq plantuml-jar-path "/usr/local/lib/plantuml/plantuml.jar")
+  (setq plantuml-default-exec-mode 'jar)
   :ensure t)
 
 ;; Racket
@@ -517,6 +538,12 @@
         (server :default "localhost")
         (port :default 5432)))
 
+(add-hook
+ 'sql-mode-hook
+ (lambda ()
+   (setq fill-column 80)
+   (display-fill-column-indicator-mode)))
+
 ;; Rust
 
 (use-package rust-mode
@@ -542,10 +569,16 @@
   :commands lsp-ivy-workspace-symbol
   :ensure t)
 
+;; Evil Mode (Vim mode)
+
+;; (use-package evil
+;;   :config
+;;   (evil-mode 1)
+;;   :ensure t)
 
 ;; Added by emacs
 
-(put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
