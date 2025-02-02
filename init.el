@@ -15,6 +15,18 @@
 
 (setq default-directory "~/")
 
+;; MacOS switch meta key
+;;
+;; This is specifically for the railwaycat distribution of emacs. There's more
+;; info here: https://gist.github.com/railwaycat/3498096
+
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'hyper)
+
+;; Disable warning for cl package
+
+(setq byte-compile-warnings '(cl-functions))
+
 ;; Straight
 ;;
 ;; straight.el replaces package.el which the main difference being that it is
@@ -22,10 +34,12 @@
 ;; inspect source code from dependencies and make changes locally.
 
 (defvar bootstrap-version)
-
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
@@ -34,8 +48,6 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-
-(setq package-enable-at-startup nil)
 
 ;; Add to load path
 
@@ -81,6 +93,12 @@
 
 (setq-default tab-width 4)
 
+;; Fill column default
+
+(setq-default fill-column 80)
+
+(set-face-attribute 'fill-column-indicator nil :foreground "grey90")
+
 ;; Remove text in active region if inserting text
 
 (delete-selection-mode 1)
@@ -119,6 +137,8 @@
   (interactive)
   (set-face-attribute 'default nil :height 150))
 
+(global-set-key (kbd "C-x C-y") 'capitalize-region)
+
 ;; Mac setup
 
 (if (string-equal system-type "darwin")
@@ -142,6 +162,13 @@
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
 
+;; Avy: jump to things
+
+(use-package avy
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2))
+  :ensure t)
+
 ;; Crux (mostly for to replace smarter beginning of line)
 
 (use-package crux
@@ -159,10 +186,14 @@
 
 ;; Backups
 
-(setq backup-directory-alist
-      '(("." . "~/.emacs.d/backups")))
-
-(setq delete-old-versions -1)
+(setq
+ backup-by-copying t
+ backup-directory-alist
+ '(("." . "~/.emacs.d.backups/"))
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t)
 
 ;; Turn off bell
 
@@ -231,6 +262,9 @@
 ;; Highlight Indentation
 
 (use-package highlight-indentation
+  :init
+  (setq yaml-block-literal-electric-alist nil)
+  (setq yaml-indent-offset 2)
   :config
   (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode))
 
@@ -264,13 +298,18 @@
 
 ;; Yaml mode
 
-(use-package yaml-mode)
+(use-package yaml-mode
+  :hook ((yaml-mode . display-fill-column-indicator-mode))
+  :init
+  (setq fill-column 80)
+  :ensure t)
 
 ;; Exec path from shell (mac only)
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
   :config
+  (setq exec-path-from-shell-arguments nil)
   (exec-path-from-shell-initialize))
 
 ;; Org mode
@@ -281,8 +320,8 @@
    '(org-export-backends (quote (md gfm beamer))))
 
   ;; Organise some directories
-  (setq org-directory "~/org")
-  (setq org-agenda-files (list (concat org-directory "/notes.org")))
+  (setq org-directory "~/.org")
+  (setq org-agenda-files (list (concat org-directory "/refile.org")))
 
   ;; Record the finish timestamp of tasks
   (setq org-log-done 'time)
@@ -311,6 +350,9 @@
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)))
 
+(use-package ob-http
+  :ensure t)
+
 (use-package babel
   :config
   (add-hook 'org-mode-hook 'visual-line-mode)
@@ -319,8 +361,11 @@
    '((shell . t)
      (sql . t)
      (ditaa . t)
-     (dot . t)))
-  :after org)
+     (dot . t)
+     (http . t)
+     (js . t)))
+  :after org ob-http ob-json
+  :ensure t)
 
 ;; Move lines
 
@@ -348,9 +393,13 @@
 
 ;; Typescript
 
-;; (use-package typescript-mode
-;;   :config
-;;   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
+(use-package typescript-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
+  :hook ((typescript-mode . display-fill-column-indicator-mode))
+  :init
+  (setq fill-column 80)
+  :ensure t)
 
 ;; Javascript (JSON)
 
@@ -392,14 +441,6 @@
 
 (use-package elixir-mode)
 
-;; Paredit
-
-;; (use-package paredit
-;;   :config
-;;   (add-hook 'clojure-mode-hook #'paredit-mode)
-;;   (add-hook 'racket-mode-hook #'paredit-mode)
-;;   (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
-
 ;; Python
 
 ;; (setq python-shell-interpreter "python3")
@@ -415,6 +456,12 @@
   :init
   (elpy-enable)
   (setq python-indent-offset 4))
+
+(setq
+ python-shell-interpreter "ipython"
+ python-shell-interpreter-args "-i")
+
+(add-hook 'python-mode-hook #'display-fill-column-indicator-mode)
 
 ;; Company (code completion)
 
@@ -481,19 +528,7 @@
   :init
   (setq inferior-lisp-program "sbcl"))
 
-;; Plant UML
-
-(use-package plantuml-mode
-  :init
-  (setq plantuml-executable-path "/opt/local/bin/plantuml")
-  (setq plantuml-default-exec-mode 'executable))
-
 ;; Racket
-
-;; (use-package racket-mode
-;;   :init
-;;   (setq racket-program "/Applications/Racket v8.0/bin/racket")
-;;   :ensure t)
 
 (use-package geiser-racket
   :init
@@ -510,6 +545,12 @@
         (database :default "postgres")
         (server :default "localhost")
         (port :default 5432)))
+
+(add-hook
+ 'sql-mode-hook
+ (lambda ()
+   (setq fill-column 80)
+   (display-fill-column-indicator-mode)))
 
 ;; Rust
 
@@ -582,10 +623,37 @@
   ;;  ("M-p" . copilot-previous-completion))
   :ensure t)
 
+;; Copilot
+
+(use-package copilot
+  :hook ((prog-mode-hook . copilot-mode))
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :bind (("C-c x l" . copilot-accept-completion-by-line)
+         ("C-c x w" . copilot-accept-completion-by-word)
+         ("C-c x a" . copilot-accept-completion))
+  :init
+  (add-to-list 'copilot-major-mode-alist '("python" . "python"))
+  (add-to-list 'copilot-major-mode-alist '("yaml" . "yaml"))
+  :ensure t)
+
+;; Evil Mode (Vim mode)
+
+;; (use-package evil
+;;   :config
+;;   (evil-mode 1)
+;;   :ensure t)
+
+;; (use-package key-chord
+;;   :init
+;;   (setq key-chord-two-keys-delay 1)
+;;   :config
+;;   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+;;   (key-chord-mode 1)
+;;   :ensure t)
 
 ;; Added by emacs
 
-(put 'upcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
