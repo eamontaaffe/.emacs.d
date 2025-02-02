@@ -4,7 +4,7 @@
 
 ;; Window
 
-(defvar default-window-height 40)
+;; (defvar default-window-height 40)
 
 (if (display-graphic-p)
     (progn
@@ -15,17 +15,27 @@
 
 (setq default-directory "~/")
 
-;; Package
+;; Straight
+;;
+;; straight.el replaces package.el which the main difference being that it is
+;; git repository based rather than using tarballs. This means that you can
+;; inspect source code from dependencies and make changes locally.
 
-(require 'package)
+(defvar bootstrap-version)
 
-(setq package-enable-at-startup
-      nil)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-
-(package-initialize)
+(setq package-enable-at-startup nil)
 
 ;; Add to load path
 
@@ -69,7 +79,7 @@
 
 ;; Tabs should be two spaces
 
-(setq-default tab-width 2)
+(setq-default tab-width 4)
 
 ;; Remove text in active region if inserting text
 
@@ -78,6 +88,17 @@
 ;; Disable minimise (I keep accidentally pressing it)
 
 (global-unset-key (kbd "C-z"))
+
+;; Default fill column
+
+(setq-default fill-column 80)
+
+;; Keep backup files in a central location
+
+(setq backup-directory-alist
+          `(("." . ,(concat user-emacs-directory "backups"))))
+
+(setq backup-by-copying t)
 
 ;; Custom functions
 
@@ -106,8 +127,7 @@
 ;; Counsel
 
 (use-package counsel
-  :config (counsel-mode)
-  :ensure t)
+  :config (counsel-mode))
 
 (use-package ivy
   :after counsel
@@ -128,8 +148,7 @@
   :bind
   (("C-a" . crux-move-beginning-of-line)
    ("C-c k" . crux-kill-other-buffers)
-   ("C-c I" . crux-find-user-init-file))
-  :ensure t)
+   ("C-c I" . crux-find-user-init-file)))
 
 ;; UTF-8
 
@@ -162,13 +181,8 @@
 (use-package magit
   :init
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
-  :ensure t
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
-
-(use-package forge
-  :after magit
-  :ensure t)
 
 ;; Multiple cursors
 
@@ -176,8 +190,7 @@
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
-         ("C-c C-<" . mc/mark-all-like-this))
-  :ensure t)
+         ("C-c C-<" . mc/mark-all-like-this)))
 
 ;; Undo tree
 
@@ -203,27 +216,23 @@
     (PATCH 2)
     (rfn 2)
     (let-routes 1)
-    (context 2))
-  :ensure t)
+    (context 2)))
 
 ;; Cider
 
 (use-package cider
   :config
-  (setq nrepl-use-ssh-fallback-for-remote-hosts t)
-  :ensure t)
+  (setq nrepl-use-ssh-fallback-for-remote-hosts t))
 
 ;; Markdown
 
-(use-package markdown-mode
-  :ensure t)
+(use-package markdown-mode)
 
 ;; Highlight Indentation
 
 (use-package highlight-indentation
   :config
-  (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode)
-  :ensure t)
+  (add-hook 'yaml-mode-hook 'highlight-indentation-current-column-mode))
 
 
 ;; Term paste
@@ -233,8 +242,7 @@
 
 ;; Projectile
 
-(use-package ag
-  :ensure t)
+(use-package ag)
 
 (use-package projectile
   :requires ag
@@ -242,46 +250,26 @@
   (setq projectile-completion-system 'ido)
   :config
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (projectile-mode +1)
-  :ensure t)
+  (projectile-mode +1))
 
 (use-package counsel-projectile
-  :config (counsel-projectile-mode)
-  :ensure t) ;; Hello
+  :config (counsel-projectile-mode)) ;; Hello
 
-;; Beige theme
+;; Theme
 
 (use-package spacemacs-theme
-  :defer t
+  :straight (:host github :repo "nashamri/spacemacs-theme")
   :init
-  (load-theme 'spacemacs-light t)
-  :ensure t)
-
-;; Light theme
-
-(use-package twilight-bright-theme
-  :disabled
-  :ensure t)
-
-;; Dark theme
-
-(use-package twilight-anti-bright-theme
-  :disabled
-  :defer t
-  :init
-  (load-theme 'twilight-anti-bright t)
-  :ensure t)
+  (load-theme 'spacemacs-light))
 
 ;; Yaml mode
 
-(use-package yaml-mode
-  :ensure t)
+(use-package yaml-mode)
 
 ;; Exec path from shell (mac only)
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
-  :ensure t
   :config
   (exec-path-from-shell-initialize))
 
@@ -321,8 +309,7 @@
 
   :bind
   (("C-c a" . org-agenda)
-   ("C-c c" . org-capture))
-  :ensure t)
+   ("C-c c" . org-capture)))
 
 (use-package babel
   :config
@@ -333,8 +320,7 @@
      (sql . t)
      (ditaa . t)
      (dot . t)))
-  :after org
-  :ensure t)
+  :after org)
 
 ;; Move lines
 
@@ -354,23 +340,40 @@
 ;; Flycheck
 
 (use-package flycheck
-  :ensure t)
+  :init (global-flycheck-mode))
+
+(use-package flycheck-rust
+  :init
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; Typescript
 
-(use-package typescript-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
-  :ensure t)
+;; (use-package typescript-mode
+;;   :config
+;;   (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode)))
 
 ;; Javascript (JSON)
 
 (setq js-indent-level 4)
 
+;; Web Mode
+
+(add-to-list
+ 'auto-mode-alist '("\\.\\(astro\\|ts\\|tsx\\|js\\|jsx\\|json\\|html\\)\\'" . web-mode))
+
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-enable-auto-quoting nil)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-enable-auto-indentation nil))
+
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
 ;; Haskell
 
 (use-package dante
-  :ensure t
   :after haskell-mode
   :commands 'dante-mode
   :init
@@ -383,46 +386,66 @@
 
 (setq org-babel-clojure-backend 'cider)
 
-(use-package cider
-  :ensure t)
+(use-package cider)
 
 ;; Elixir
 
-(use-package elixir-mode
-  :ensure t)
+(use-package elixir-mode)
 
 ;; Paredit
 
-(use-package paredit
-  :config
-  (add-hook 'clojure-mode-hook #'paredit-mode)
-  (add-hook 'racket-mode-hook #'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  :ensure t)
+;; (use-package paredit
+;;   :config
+;;   (add-hook 'clojure-mode-hook #'paredit-mode)
+;;   (add-hook 'racket-mode-hook #'paredit-mode)
+;;   (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
 
 ;; Python
+
+;; (setq python-shell-interpreter "python3")
+
+(setq python-shell-interpreter "rye")
+(setq python-shell-interpreter-args "run ipython")
+
+(use-package poetry
+  :hook
+  ((elpy-mode-hook . poetry-tracking-mode)))
 
 (use-package elpy
   :init
   (elpy-enable)
-  (setq python-indent-offset 4)
-  :ensure t)
+  (setq python-indent-offset 4))
 
 ;; Company (code completion)
 
 (use-package company
   :init
   (global-company-mode)
-  (add-hook 'cider-repl-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'company-mode)
-  :ensure t)
+  :custom
+  (company-idle-delay 0.5) ;; how long to wait until popup
+  :bind
+  (:map company-active-map
+    ("C-n". company-select-next)
+    ("C-p". company-select-previous)
+    ("M-<". company-select-first)
+    ("M->". company-select-last))
+  :hook
+  ((cider-repl-mode . company-mode)
+   (cider-mode . company-mode)
+   (go-mode . company-mode)
+   (rust-mode . company-mode)))
+
+;; Yasnippet
+
+(use-package yasnippet
+  :init
+  (yas-global-mode))
 
 ;; Browse Kill Ring
 
 (use-package browse-kill-ring
   :config
-  (global-set-key (kbd "M-y") 'browse-kill-ring)
-  :ensure t)
+  (global-set-key (kbd "M-y") 'browse-kill-ring))
 
 ;; Dired
 
@@ -435,38 +458,35 @@
 
 ;; Docker
 
-(use-package dockerfile-mode
-  :ensure t)
+(use-package dockerfile-mode)
 
 ;; Go
 
 (use-package go-mode
-  :ensure t)
+  :hook
+  ((go-mode . display-fill-column-indicator-mode)
+   (go-mode . lsp-ui-sideline-mode)))
 
-(use-package go-scratch
-  :ensure t)
+(use-package go-scratch)
 
 ;; String inflection
 
 (use-package string-inflection
   :bind
-  (("C-c C-q C-j" . string-inflection-lower-camelcase))
-  :ensure t)
+  (("C-c C-q C-j" . string-inflection-lower-camelcase)))
 
 ;; Common Lisp
 
 (use-package slime
   :init
-  (setq inferior-lisp-program "sbcl")
-  :ensure t)
+  (setq inferior-lisp-program "sbcl"))
 
 ;; Plant UML
 
 (use-package plantuml-mode
   :init
   (setq plantuml-executable-path "/opt/local/bin/plantuml")
-  (setq plantuml-default-exec-mode 'executable)
-  :ensure t)
+  (setq plantuml-default-exec-mode 'executable))
 
 ;; Racket
 
@@ -477,18 +497,11 @@
 
 (use-package geiser-racket
   :init
-  (setq geiser-active-implementations '(racket))
-  :ensure t)
+  (setq geiser-active-implementations '(racket)))
 
 ;; Fill region
 
 (global-set-key (kbd "C-c C-f") 'fill-region)
-
-;; Colourful Dired Mode
-
-(use-package diredfl
-  :commands diredfl-global-mode
-  :hook (dired-mode . diredfl-mode))
 
 ;; SQL
 
@@ -505,22 +518,68 @@
   (("C-c C-c" . rust-compile)
    ("C-c C-t" . rust-test))
   :hook ((rust-mode . display-fill-column-indicator-mode))
-  :init
-  (setq fill-column 80)
   :ensure t)
 
-;; Language Server
+;; Language Server - Eglot
 
-(use-package lsp-mode
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-rust-server "rls")
-  :hook ((rust-mode . lsp))
-  :commands lsp
+(use-package eglot
+  :hook ((python-mode . eglot-ensure) (rust-mode . eglot-ensure))
+  :bind (("C-c C-l a" . eglot-code-actions))
+  :config
+  (add-to-list 'eglot-server-programs
+             '((rust-ts-mode rust-mode) .
+               ("rust-analyzer"
+                :initializationOptions
+                (:check (:allTargets :json-false)
+                 :cargo (:target "thumbv8m.main-none-eabihf")))))
   :ensure t)
 
-(use-package lsp-ivy
-  :commands lsp-ivy-workspace-symbol
+;; Key Chord
+;;
+;; Used by evil mode to map jj to escape
+
+(use-package key-chord
+  :straight (:host github :repo "emacsorphanage/key-chord")
+  :init
+  (setq key-chord-two-keys-delay 0.5)
+  (key-chord-mode 1))
+
+;; Evil
+;;
+;; Install Evil but default to emacs mode in most major modes.
+
+(use-package evil
+  :requires key-chord
+  :init
+  (setq evil-default-state 'emacs)
+  :config
+  (evil-set-initial-state 'prog-mode 'normal)
+  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+  (evil-set-initial-state 'term-mode 'emacs)
+  ;; (evil-mode 1)
+  )
+
+;; Switch Option for meta
+
+
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
+(setq mac-pass-command-to-system nil)
+
+;; Copilot
+
+(use-package copilot
+ :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+ :hook ((prog-mode . copilot-mode))
+ :config
+  (add-to-list 'copilot-indentation-alist '(org-mode . 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 2))
+  ;; :bind
+  ;; (("C-f" . copilot-accept-completion)
+  ;;  ("M-f" . copilot-accept-completion-by-word)
+  ;;  ("C-e" . copilot-accept-completion-by-line)
+  ;;  ("M-n" . copilot-next-completion)
+  ;;  ("M-p" . copilot-previous-completion))
   :ensure t)
 
 

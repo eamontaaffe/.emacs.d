@@ -7,3 +7,4 @@ elpa/
 !.gitignore
 !init.el
 !packages/*
+straight
